@@ -1,6 +1,5 @@
 "Plug"
 source $HOME/.config/nvim/vim-plug/plugins.vim
-colorscheme dracula
 "Sets"
 set background=dark
 set backupdir=~/.private/vimtmp/
