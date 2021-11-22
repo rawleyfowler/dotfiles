@@ -6,7 +6,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'airblade/vim-rooter'
 	Plug 'rktjmp/lush.nvim'
-	Plug 'Mofiqul/dracula.nvim'
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'scrooloose/NERDTree'
