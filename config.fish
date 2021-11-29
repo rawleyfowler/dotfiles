@@ -1,3 +1,6 @@
 if status is-interactive
-    # Commands to run in interactive sessions can go here
+    set fish_greeting
+    set -g EDITOR nvim
+    alias vi=nvim
+    alias vim=nvim
 end
