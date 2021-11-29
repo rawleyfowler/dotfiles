@@ -22,6 +22,9 @@ set ai
 "Mappings"
 nmap <F3> :NERDTreeToggle<CR>
 nmap <F2> :NERDTree-CD
+nmap <C-l> :bn<cr>
+nmap <C-h> :bp<cr>
+nmap <A-;> :Rg<cr>
 inoremap <silent><expr> <TAB>
 					\ pumvisible() ? "\<C-n>" :
 					\ <SID>check_back_space() ? "\<TAB>" :
