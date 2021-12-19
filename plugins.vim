@@ -9,6 +9,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'scrooloose/NERDTree'
+	Plug 'ap/vim-css-color'
+	Plug 'https://gitlab.com/rawleyIfowler/melange'
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'tpope/vim-fugitive'
 	Plug 'scrooloose/syntastic'
