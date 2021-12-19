@@ -15,6 +15,9 @@ set signcolumn=yes
 set hidden
 set noerrorbells
 set smartcase
+set termguicolors
+set background=dark
+colorscheme melange
 set nowrap
 set tabstop=2
 set ls=2
