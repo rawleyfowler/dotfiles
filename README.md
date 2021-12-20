@@ -1,2 +1,2 @@
-# dotfiles
-These dotfiles are my current setup for vim and the fish shell. I will be adding more in the future.
+## dotfiles
+These dotfile are for my fish, and neovim configs. Currently I am using neovim with my customized version of the melange color scheme. You can check that out [here](https://gitlab.com/rawleyIfowler/melange).
