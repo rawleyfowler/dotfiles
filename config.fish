@@ -3,4 +3,5 @@ if status is-interactive
     set -g EDITOR nvim
     alias vi=nvim
     alias vim=nvim
+    alias doas=sudo
 end
