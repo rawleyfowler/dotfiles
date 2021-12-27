@@ -2,6 +2,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
 	Plug 'junegunn/fzf.vim'
 	Plug 'nvim-lualine/lualine.nvim'
+	Plug 'sbdchd/neoformat'
 	Plug 'romgrk/barbar.nvim'
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'airblade/vim-rooter'
