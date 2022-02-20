@@ -16,6 +16,7 @@ call plug#begin()
 	Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 	Plug 'ap/vim-buftabline'
 	Plug 'dracula/vim'
+	Plug 'fatih/vim-go', { 'for': 'go' }
 call plug#end()
 colorscheme dracula
 set bg=dark
