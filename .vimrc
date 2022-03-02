@@ -1,3 +1,9 @@
+"Not compatible with vi, which causes problems
+set nocompatible
+filetype on
+filetype plugin on
+filetype indent on
+"Plugins in ~/.vim/plugged
 call plug#begin()
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -17,6 +23,7 @@ call plug#begin()
 	Plug 'ap/vim-buftabline'
 	Plug 'dracula/vim'
 	Plug 'fatih/vim-go', { 'for': 'go' }
+	Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
 call plug#end()
 colorscheme dracula
 set bg=dark
@@ -35,3 +42,8 @@ nmap <S-w> :NERDTreeToggle<cr>
 inoremap <expr> <Tab>	pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<Tab>" : "\<cr>"
+if filetype?=="clojure"
+	call RainbowParenthesesToggle
+	call RainbowParenthesesLoadRound
+	call RainbowParenthesesLoadSquare
+endif
