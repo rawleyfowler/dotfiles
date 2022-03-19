@@ -42,8 +42,3 @@ nmap <S-w> :NERDTreeToggle<cr>
 inoremap <expr> <Tab>	pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<Tab>" : "\<cr>"
-if filetype?=="clojure"
-	call RainbowParenthesesToggle
-	call RainbowParenthesesLoadRound
-	call RainbowParenthesesLoadSquare
-endif
