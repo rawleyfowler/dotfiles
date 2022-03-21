@@ -37,7 +37,7 @@ set t_Co=256
 set background=dark
 set nowrap
 "Buffer movement, going to go to harpoon soon to try to get away from buffer
-"switch inefficiency.
+"switch inefficiency
 nmap <C-h> :bp<cr>
 nmap <C-l> :bn<cr>
 nmap <C-q> :Bclose<cr>
@@ -51,8 +51,9 @@ inoremap <expr> <cr> pumvisible() ? "\<Tab>" : "\<cr>"
 autocmd BufNewFile,BufRead *.html,*.txt,*.blog set spell
 autocmd BufNewFile,BufRead *.html,*.txt,*.blog set wrap
 "Load only on Lisp, Clojure, or Emacs Lisp files for rainbow parens
-au FileType clj,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
-"Toggle on by default
-if (&ft=="clj") || (&ft=="lisp") || (&ft=="lsp") || (&ft=="el") || (&ft=="eln") || (&ft=="l") || (&ft=="cl") || (&ft=="elc")
+au FileType clojure,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
+"Toggle on rainbow parens by default if the following file type is detected
+let fts=['clojure', 'lisp', 'lsp', 'cl', 'el', 'eln', 'l', 'elc']
+if index(fts, &filetype) != -1
 	:RainbowToggle
 endif
