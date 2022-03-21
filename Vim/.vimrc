@@ -1,5 +1,6 @@
 "Not compatible with vi, which causes problems
 set nocompatible
+"Get filetype
 filetype on
 filetype plugin on
 filetype indent on
@@ -23,10 +24,10 @@ call plug#begin()
 	Plug 'ap/vim-buftabline'
 	Plug 'dracula/vim'
 	Plug 'fatih/vim-go', { 'for': 'go' }
-	Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
+	Plug 'frazrepo/vim-rainbow'
 call plug#end()
+"Dracula > All
 colorscheme dracula
-set bg=dark
 syntax on
 set ai
 set number
@@ -35,10 +36,23 @@ set sw=2
 set t_Co=256
 set background=dark
 set nowrap
+"Buffer movement, going to go to harpoon soon to try to get away from buffer
+"switch inefficiency.
 nmap <C-h> :bp<cr>
 nmap <C-l> :bn<cr>
 nmap <C-q> :Bclose<cr>
+"Nerd tree
 nmap <S-w> :NERDTreeToggle<cr>
+"COC auto complete
 inoremap <expr> <Tab>	pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<Tab>" : "\<cr>"
+"For writing blog posts
+autocmd BufNewFile,BufRead *.html,*.txt,*.blog set spell
+autocmd BufNewFile,BufRead *.html,*.txt,*.blog set wrap
+"Load only on Lisp, Clojure, or Emacs Lisp files for rainbow parens
+au FileType clj,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
+"Toggle on by default
+if (&ft=="clj") || (&ft=="lisp") || (&ft=="lsp") || (&ft=="el") || (&ft=="eln") || (&ft=="l") || (&ft=="cl") || (&ft=="elc")
+	:RainbowToggle
+endif
