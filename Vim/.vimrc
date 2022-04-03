@@ -32,7 +32,6 @@ set ai
 set number
 set ts=2
 set sw=2
-set t_Co=256
 set background=dark
 set nowrap
 "Buffer movement, going to go to harpoon soon to try to get away from buffer
@@ -58,3 +57,7 @@ if index(fts, &filetype) != -1
 endif
 let g:clojure_fuzzy_indent = 1
 let g:clojure_align_subforms = 1
+"Fix weird background color issues with dracula
+if &term =~ '256color'
+	set t_ut=
+endif
