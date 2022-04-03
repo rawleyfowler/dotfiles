@@ -4,6 +4,7 @@ set nocompatible
 filetype on
 filetype plugin on
 filetype indent on
+filetype plugin indent on
 "Plugins in ~/.vim/plugged
 call plug#begin()
 	Plug 'jiangmiao/auto-pairs'
@@ -22,6 +23,7 @@ call plug#begin()
 	Plug 'dracula/vim'
 	Plug 'fatih/vim-go', { 'for': 'go' }
 	Plug 'frazrepo/vim-rainbow'
+	Plug 'clojure-vim/clojure.vim', { 'for': 'clojure' }
 call plug#end()
 "Dracula > All
 colorscheme dracula
@@ -54,3 +56,5 @@ let fts=['clojure', 'lisp', 'lsp', 'cl', 'el', 'eln', 'l', 'elc']
 if index(fts, &filetype) != -1
 	:RainbowToggle
 endif
+let g:clojure_fuzzy_indent = 1
+let g:clojure_align_subforms = 1
