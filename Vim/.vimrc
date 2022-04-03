@@ -14,9 +14,6 @@ call plug#begin()
 	Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
 	Plug 'itchyny/lightline.vim'
 	Plug 'tpope/vim-surround'
-	Plug 'arzg/vim-colors-xcode'
-	Plug 'srcery-colors/srcery-vim'
-	Plug 'sainnhe/gruvbox-material'
 	Plug 'https://github.com/KabbAmine/yowish.vim'
 	Plug 'https://github.com/ap/vim-css-color'
 	Plug 'neoclide/coc.nvim'
