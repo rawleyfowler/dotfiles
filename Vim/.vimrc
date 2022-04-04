@@ -24,6 +24,7 @@ call plug#begin()
 	Plug 'fatih/vim-go', { 'for': 'go' }
 	Plug 'frazrepo/vim-rainbow'
 	Plug 'clojure-vim/clojure.vim', { 'for': 'clojure' }
+	Plug 'vim-scripts/VimClojure', { 'for': 'clojure' }
 call plug#end()
 "Dracula > All
 colorscheme dracula
@@ -34,6 +35,12 @@ set ts=2
 set sw=2
 set background=dark
 set nowrap
+set hidden
+set showcmd
+set wildmenu
+set hlsearch
+set confirm
+set expandtab
 "Buffer movement, going to go to harpoon soon to try to get away from buffer
 "switch inefficiency
 nmap <C-h> :bp<cr>
