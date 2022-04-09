@@ -12,6 +12,8 @@ call plug#begin()
 	Plug 'arzg/vim-swift', { 'for': 'swift' }
 	Plug 'tyru/open-browser.vim'
 	Plug 'junegunn/vim-easy-align'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 	Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
 	Plug 'itchyny/lightline.vim'
 	Plug 'tpope/vim-surround'
@@ -31,8 +33,8 @@ colorscheme dracula
 syntax on
 set ai
 set number
-set ts=2
-set sw=2
+set ts=4
+set sw=4
 set background=dark
 set nowrap
 set hidden
@@ -41,11 +43,12 @@ set wildmenu
 set hlsearch
 set confirm
 set expandtab
-"Buffer movement, going to go to harpoon soon to try to get away from buffer
-"switch inefficiency
+"Buffer hopping
 nmap <C-h> :bp<cr>
 nmap <C-l> :bn<cr>
 nmap <C-q> :Bclose<cr>
+"Ripgrep with fzf
+nmap <C-f> :Rg<cr>
 "Nerd tree
 nmap <S-w> :NERDTreeToggle<cr>
 "COC auto complete
