@@ -69,9 +69,9 @@ if index(fts, &filetype) != -1
     set sw=2
     :RainbowToggle
 endif
-"Configure clojue fuzzy indents and alignments
-let g:clojure_fuzzy_indent = 1
-let g:clojure_align_subforms = 1
+"Configure clojure fuzzy indents and alignments
+let g:clojure_fuzzy_indent=1
+let g:clojure_align_subforms=1
 "Fix weird background color issues with dracula color scheme
 if &term =~ '256color'
     set t_ut=
