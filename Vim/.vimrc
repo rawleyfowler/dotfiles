@@ -7,26 +7,26 @@ filetype indent on
 filetype plugin indent on
 "Plugins in ~/.vim/plugged
 call plug#begin()
-	Plug 'jiangmiao/auto-pairs'
-	Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-	Plug 'arzg/vim-swift', { 'for': 'swift' }
-	Plug 'tyru/open-browser.vim'
-	Plug 'junegunn/vim-easy-align'
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
-	Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
-	Plug 'itchyny/lightline.vim'
-	Plug 'tpope/vim-surround'
-	Plug 'https://github.com/KabbAmine/yowish.vim'
-	Plug 'https://github.com/ap/vim-css-color'
-	Plug 'neoclide/coc.nvim'
-	Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
-	Plug 'ap/vim-buftabline'
-	Plug 'dracula/vim'
-	Plug 'fatih/vim-go', { 'for': 'go' }
-	Plug 'frazrepo/vim-rainbow'
-	Plug 'clojure-vim/clojure.vim', { 'for': 'clojure' }
-	Plug 'vim-scripts/VimClojure', { 'for': 'clojure' }
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+    Plug 'arzg/vim-swift', { 'for': 'swift' }
+    Plug 'tyru/open-browser.vim'
+    Plug 'junegunn/vim-easy-align'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
+    Plug 'itchyny/lightline.vim'
+    Plug 'tpope/vim-surround'
+    Plug 'https://github.com/KabbAmine/yowish.vim'
+    Plug 'https://github.com/ap/vim-css-color'
+    Plug 'neoclide/coc.nvim'
+    Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
+    Plug 'ap/vim-buftabline'
+    Plug 'dracula/vim'
+    Plug 'fatih/vim-go', { 'for': 'go' }
+    Plug 'frazrepo/vim-rainbow'
+    Plug 'clojure-vim/clojure.vim', { 'for': 'clojure' }
+    Plug 'vim-scripts/VimClojure', { 'for': 'clojure' }
 call plug#end()
 "Dracula > All
 colorscheme dracula
@@ -63,11 +63,16 @@ au FileType clojure,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
 "Toggle on rainbow parens by default if the following file type is detected
 let fts=['clojure', 'lisp', 'lsp', 'cl', 'el', 'eln', 'l', 'elc']
 if index(fts, &filetype) != -1
-	:RainbowToggle
+    "Clojure style standards like 2 space indents check it out:
+    "https://guide.clojure.style
+    set ts=2
+    set sw=2
+    :RainbowToggle
 endif
+"Configure clojue fuzzy indents and alignments
 let g:clojure_fuzzy_indent = 1
 let g:clojure_align_subforms = 1
-"Fix weird background color issues with dracula
+"Fix weird background color issues with dracula color scheme
 if &term =~ '256color'
-	set t_ut=
+    set t_ut=
 endif
