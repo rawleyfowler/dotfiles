@@ -17,15 +17,19 @@ call plug#begin()
     Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
     Plug 'itchyny/lightline.vim'
     Plug 'tpope/vim-surround'
+    Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'mattn/vim-lsp-settings'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
     Plug 'https://github.com/KabbAmine/yowish.vim'
     Plug 'https://github.com/ap/vim-css-color'
-    Plug 'neoclide/coc.nvim'
     Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
     Plug 'ap/vim-buftabline'
     Plug 'dracula/vim'
     Plug 'fatih/vim-go', { 'for': 'go' }
     Plug 'frazrepo/vim-rainbow'
     Plug 'clojure-vim/clojure.vim', { 'for': 'clojure' }
+    Plug 'clojure-vim/async-clj-omni', { 'for': 'clojure' }
     Plug 'vim-scripts/VimClojure', { 'for': 'clojure' }
 call plug#end()
 "Dracula > All
@@ -51,14 +55,29 @@ nmap <C-q> :Bclose<cr>
 nmap <C-f> :Rg<cr>
 "Nerd tree
 nmap <S-w> :NERDTreeToggle<cr>
-"COC auto complete
-inoremap <expr> <Tab>	pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<Tab>" : "\<cr>"
 "For writing blog posts
 autocmd BufNewFile,BufRead *.html,*.txt,*.blog set spell
 autocmd BufNewFile,BufRead *.html,*.txt,*.blog set wrap
-"Load only on Lisp, Clojure, or Emacs Lisp files for rainbow parens
+"Asyncomplete configurations
+inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+function! s:check_back_space() abort 
+    let col=col('.') - 1
+    return !col || getline('.')[col - 1] =~ '\s'
+endfunction
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ asyncomplete#force_refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+"AUTO COMPLETES"
+au User asyncomplete_setup call asyncomplete#register_source({
+    \ 'name': 'async_clj_omni',
+    \ 'whitelist': ['clojure'],
+    \ 'completor': function('async_clj_omni#sources#complete'),
+    \ })
+""Load only on Lisp, Clojure, or Emacs Lisp files for rainbow parens
 au FileType clojure,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
 "Toggle on rainbow parens by default if the following file type is detected
 let fts=['clojure', 'lisp', 'lsp', 'cl', 'el', 'eln', 'l', 'elc']
