@@ -17,8 +17,12 @@ call plug#begin()
     Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
     Plug 'itchyny/lightline.vim'
     Plug 'tpope/vim-surround'
+    Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
     Plug 'prabirshrestha/vim-lsp'
+    Plug 'prabirshrestha/asyncomplete-gocode.vim', { 'for': 'go' }
+    Plug 'keremc/asyncomplete-clang.vim', { 'for': ['c', 'cpp', 'h', 'hpp'] }
     Plug 'mattn/vim-lsp-settings'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
     Plug 'https://github.com/KabbAmine/yowish.vim'
@@ -77,6 +81,23 @@ au User asyncomplete_setup call asyncomplete#register_source({
     \ 'whitelist': ['clojure'],
     \ 'completor': function('async_clj_omni#sources#complete'),
     \ })
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
+    \ 'name': 'gocode',
+    \ 'allowlist': ['go'],
+    \ 'completor': function('asyncomplete#sources#gocode#completor'),
+    \ 'config': {
+    \    'gocode_path': expand('~/go/bin/gocode')
+    \ },
+    \ }))
+au User asyncomplete_setup call asyncomplete#register_source(
+    \ asyncomplete#sources#clang#get_source_options({
+    \   'config': {
+    \       'clang_path': '/usr/bin/clang',
+    \       'clang_args': {
+    \           'cpp': ['-std=c++11'] 
+    \       }
+    \   }
+    \}))
 ""Load only on Lisp, Clojure, or Emacs Lisp files for rainbow parens
 au FileType clojure,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
 "Toggle on rainbow parens by default if the following file type is detected
