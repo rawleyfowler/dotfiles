@@ -10,4 +10,4 @@ On OpenBSD I use exclusively the Korn Shell, while on Linux I use bash. You can 
 ## Screenshots
 The following is my Parabola system using my forks of [dwm](https://gitlab.com/rawleyIfowler/dwm), [st](https://gitlab.com/rawleyIfowler/st), and my NeoVim configuration.
 
-https://i.imgur.com/hH0CTZM.png
+![image of the setup](https://i.imgur.com/hH0CTZM.png)
