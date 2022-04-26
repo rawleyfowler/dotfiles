@@ -46,3 +46,4 @@ end
 -- Go specific configurations
 require('lspconfig')['gopls'].setup{}
 -- C/C++ specific configurations
+require('lspconfig')['clangd'].setup{}
