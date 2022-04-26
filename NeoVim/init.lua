@@ -1,19 +1,21 @@
 local set = vim.opt
-local Plug = vim.fn['plug#']
+local cmd = vim.api.nvim_command
+local au = vim.api.nvim_create_autocmd
+local plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
-Plug('https://gitlab.com/rawleyIfowler/melange')
-Plug('scrooloose/nerdtree', {on = 'NERDTreeToggle'})
-Plug('tpope/vim-surround')
-Plug('tpope/vim-fireplace', {['for'] = 'clojure'})
-Plug('neovim/nvim-lsp')
-Plug('neovim/nvim-lspconfig')
-Plug('junegunn/goyo.vim', {['for'] = 'markdown'})
-Plug('junegunn/fzf', {['dir'] = '~/.fzf', ['do'] = './install --all'})
-Plug('junegunn/fzf.vim')
-Plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
-Plug('guns/vim-clojure-static', {['for'] = 'clojure'})
-Plug('luochen1990/rainbow', {['for'] = 'clojure'})
-Plug('docunext/closetag.vim')
+plug('https://gitlab.com/rawleyIfowler/melange')
+plug('scrooloose/nerdtree', {on = 'NERDTreeToggle'})
+plug('tpope/vim-surround')
+plug('tpope/vim-fireplace', {['for'] = 'clojure'})
+plug('neovim/nvim-lsp')
+plug('neovim/nvim-lspconfig')
+plug('junegunn/goyo.vim', {['for'] = 'markdown'})
+plug('junegunn/fzf', {['dir'] = '~/.fzf', ['do'] = './install --all'})
+plug('junegunn/fzf.vim')
+plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
+plug('guns/vim-clojure-static', {['for'] = 'clojure'})
+plug('luochen1990/rainbow', {['for'] = 'clojure'})
+plug('docunext/closetag.vim')
 vim.call('plug#end')
 -- Basic editor configurations
 set.tabstop = 4
@@ -28,21 +30,27 @@ set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
 -- Keybindings
 ---- NERDTree
-vim.keymap.set('n', '<S-w>', ':NERDTreeToggle<CR>')
-vim.keymap.set('n', '<S-q>', ':NERDTreeClose<CR>')
+vim.keymap.set('n', '', ':NERDTreeToggle')
+vim.keymap.set('n', '', ':NERDTreeClose')
 ---- Ripgrep
-vim.keymap.set('n', '<C-f>', ':Rg<cr>')
+vim.keymap.set('n', '', ':Rg')
 -- Colors
 vim.cmd('syntax enable')
 vim.cmd('colorscheme melange')
 vim.o.background = 'dark'
 -- Clojure specific configurations
 require('lspconfig')['clojure_lsp'].setup{}
-if vim.bo.filetype == 'clojure' then
-    set.tabstop = 2
-    set.shiftwidth = 2
-    set.softtabstop = 2
-end
+local clj_augroup = vim.api.nvim_create_augroup('clj_cmds', {clear = true})
+au('filetype', {
+    pattern = { 'clojure', 'clj' },
+    group = clj_augroup,
+    desc = 'Change tab size for clojure files',
+    callback = function()
+        set.tabstop = 2
+        set.shiftwidth = 2
+        set.softtabstop = 2
+    end
+})
 -- Go specific configurations
 require('lspconfig')['gopls'].setup{}
 -- C/C++ specific configurations
