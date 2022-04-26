@@ -15,7 +15,8 @@ alias sudo=doas
 alias ruby=ruby30
 alias gem=gem30
 
-# PS1 is ripped straight from my .bashrc, it works just fine.
-PS1='[\e[0;32m\u\e[m@\e[0;33m\h\e[m \W]\e[0;33m\$\e[m '
+# PS1 is the prompt for your shell.
+# This translates to '[USER@HOST /curr/dir]$ '
+PS1='[${USER}@${HOST} ${PWD}]$ '
 
 export vi vim ls sudo ruby gem PS1
