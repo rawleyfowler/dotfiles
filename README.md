@@ -8,6 +8,6 @@ I maintain a configuration for Vim and NeoVim at the moment, since I use both on
 On OpenBSD I use exclusively the Korn Shell, while on Linux I use bash. You can find both of those configurations here.
 
 ## Screenshots
-The following is my Parabola system using my forks of [dwm](https://gitlab.com/rawleyIfowler/dwm), [st](https://gitlab.com/rawleyIfowler/st), and my NeoVim configuration.
+The following is my Parabola system using my forks of [dwm](https://www.github.com/rawleyIfowler/dwm), [st](https://www.github.com/rawleyIfowler/st), and my NeoVim configuration.
 
 ![image of the setup](https://i.imgur.com/hH0CTZM.png)
