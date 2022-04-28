@@ -4,6 +4,7 @@ local au = vim.api.nvim_create_autocmd
 local plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
 plug('https://gitlab.com/rawleyIfowler/melange')
+plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
 plug('scrooloose/nerdtree', {on = 'NERDTreeToggle'})
 plug('tpope/vim-surround')
 plug('tpope/vim-fireplace', {['for'] = 'clojure'})
@@ -12,6 +13,7 @@ plug('neovim/nvim-lspconfig')
 plug('junegunn/goyo.vim', {['for'] = 'markdown'})
 plug('junegunn/fzf', {['dir'] = '~/.fzf', ['do'] = './install --all'})
 plug('junegunn/fzf.vim')
+plug('jiangmiao/auto-pairs')
 plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
 plug('guns/vim-clojure-static', {['for'] = 'clojure'})
 plug('luochen1990/rainbow', {['for'] = 'clojure'})
@@ -30,10 +32,10 @@ set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
 -- Keybindings
 ---- NERDTree
-vim.keymap.set('n', '<S-w>', ':NERDTreeToggle')
-vim.keymap.set('n', '<S-q>', ':NERDTreeClose')
+vim.keymap.set('n', '', ':NERDTreeToggle')
+vim.keymap.set('n', '', ':NERDTreeClose')
 ---- Ripgrep
-vim.keymap.set('n', '<C-f>', ':Rg')
+vim.keymap.set('n', '', ':Rg')
 -- Colors
 vim.cmd('syntax enable')
 vim.cmd('colorscheme melange')
