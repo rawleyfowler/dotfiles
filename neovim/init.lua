@@ -32,10 +32,10 @@ set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
 -- Keybindings
 ---- NERDTree
-vim.keymap.set('n', '', ':NERDTreeToggle')
-vim.keymap.set('n', '', ':NERDTreeClose')
+vim.keymap.set('n', '<S-w>', ':NERDTreeToggle')
+vim.keymap.set('n', '<S-q>', ':NERDTreeClose')
 ---- Ripgrep
-vim.keymap.set('n', '', ':Rg')
+vim.keymap.set('n', '<C-f>', ':Rg')
 -- Colors
 vim.cmd('syntax enable')
 vim.cmd('colorscheme melange')
