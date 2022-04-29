@@ -18,7 +18,9 @@ plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
 plug('guns/vim-clojure-static', {['for'] = 'clojure'})
 plug('luochen1990/rainbow', {['for'] = 'clojure'})
 plug('docunext/closetag.vim')
+plug('norcalli/nvim_utils')
 vim.call('plug#end')
+pcall(require, 'nvim_utils') 
 -- Basic editor configurations
 set.tabstop = 4
 set.shiftwidth = 4
@@ -31,28 +33,35 @@ set.autowrite = true
 set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
 -- Keybindings
+function nnoremap(mode, lhs, rhs, opts)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
 ---- NERDTree
-vim.keymap.set('n', '<S-w>', ':NERDTreeToggle')
-vim.keymap.set('n', '<S-q>', ':NERDTreeClose')
+nnoremap('n', '<S-w>', ':NERDTreeToggle<cr>')
+nnoremap('n', '<S-q>', ':NERDTreeClose<cr>')
 ---- Ripgrep
-vim.keymap.set('n', '<C-f>', ':Rg')
+nnoremap('n', '<C-f>', ':Rg<cr>')
 -- Colors
 vim.cmd('syntax enable')
 vim.cmd('colorscheme melange')
 vim.o.background = 'dark'
--- Clojure specific configurations
+-- Clojure/Common Lisp specific configurations
+-- Clojure and Common Lisp style is 2 space indent
+-- https://guide.clojure.style
+vim.cmd([[
+    au FileType clojure,clj,lisp,cl,l call rainbow#load()
+    let fts=['clojure', 'clj', 'lisp', 'lsp', 'cl', 'l']
+    if index(fts, &filetype) != -1
+        set ts=2
+        set sw=2
+        :RainbowToggle
+    endif
+]])
 require('lspconfig')['clojure_lsp'].setup{}
-local clj_augroup = vim.api.nvim_create_augroup('clj_cmds', {clear = true})
-au('filetype', {
-    pattern = { 'clojure', 'clj' },
-    group = clj_augroup,
-    desc = 'Change tab size for clojure files',
-    callback = function()
-        set.tabstop = 2
-        set.shiftwidth = 2
-        set.softtabstop = 2
-    end
-})
 -- Go specific configurations
 require('lspconfig')['gopls'].setup{}
 -- C/C++ specific configurations
