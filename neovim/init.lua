@@ -4,8 +4,11 @@ local au = vim.api.nvim_create_autocmd
 local plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
 plug('https://gitlab.com/rawleyIfowler/melange')
+plug('ap/vim-css-color')
 plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
-plug('scrooloose/nerdtree', {on = 'NERDTreeToggle'})
+plug('scrooloose/nerdtree', { on = 'NERDTreeToggle'})
+plug('fatih/vim-go', { ['for'] = 'go' })
+plug('tree-sitter/tree-sitter')
 plug('tpope/vim-surround')
 plug('tpope/vim-fireplace', {['for'] = 'clojure'})
 plug('neovim/nvim-lsp')
@@ -19,8 +22,13 @@ plug('guns/vim-clojure-static', {['for'] = 'clojure'})
 plug('luochen1990/rainbow', {['for'] = 'clojure'})
 plug('docunext/closetag.vim')
 plug('norcalli/nvim_utils')
+plug('hrsh7th/nvim-cmp')
+plug('hrsh7th/cmp-buffer')
+plug('hrsh7th/cmp-nvim-lsp')
+plug('l3mon4d3/luasnip')
 vim.call('plug#end')
 pcall(require, 'nvim_utils') 
+local cmp = require('cmp')
 -- Basic editor configurations
 set.tabstop = 4
 set.shiftwidth = 4
@@ -33,18 +41,41 @@ set.autowrite = true
 set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
 -- Keybindings
-function nnoremap(mode, lhs, rhs, opts)
-    local options = { noremap = true }
+function map(mode, lhs, rhs, opts)
+    options = {}
     if opts then
         options = vim.tbl_extend("force", options, opts)
     end
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 ---- NERDTree
-nnoremap('n', '<S-w>', ':NERDTreeToggle<cr>')
-nnoremap('n', '<S-q>', ':NERDTreeClose<cr>')
+map('n', '<S-w>', ':NERDTreeToggle<cr>', { noremap = true })
+map('n', '<S-q>', ':NERDTreeClose<cr>', { noremap = true })
 ---- Ripgrep
-nnoremap('n', '<C-f>', ':Rg<cr>')
+map('n', '<C-f>', ':Rg<cr>')
+---- Auto-complete
+cmp.setup({
+    snippet = {
+        expand = function(a)
+            -- Enable the lua snips engine
+            require('luasnip').lsp_expand(a.body)
+        end
+    },
+
+    mapping = cmp.mapping.preset.insert({
+        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-Space>'] = cmp.mapping.complete()
+    }),
+
+    sources = {
+        -- Get completions from these sources
+        { name = 'buffer' },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }
+    }
+})
+local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Colors
 vim.cmd('syntax enable')
 vim.cmd('colorscheme melange')
@@ -61,8 +92,8 @@ vim.cmd([[
         :RainbowToggle
     endif
 ]])
-require('lspconfig')['clojure_lsp'].setup{}
+require('lspconfig')['clojure_lsp'].setup{ capabilities = cmp_capabilities }
 -- Go specific configurations
-require('lspconfig')['gopls'].setup{}
+require('lspconfig')['gopls'].setup{ capabilities = cmp_capabilities }
 -- C/C++ specific configurations
-require('lspconfig')['clangd'].setup{}
+require('lspconfig')['clangd'].setup{ capabilities = cmp_capabilities }
