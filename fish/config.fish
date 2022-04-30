@@ -1,3 +1,5 @@
+# Rawley Fowlers, config.fish. Last updated: April 30th, 2022
+
 if status is-interactive
 	set fish_greeting
 	set TERM "st"
@@ -6,6 +8,7 @@ if status is-interactive
 	alias vim='nvim'
 	alias vi='nvim'
 end
-# I build Go
-export GOPATH=$HOME/.go
-export PATH=$PATH:/usr/local/go/bin
+
+# Paths
+set GOPATH $HOME/.go
+set PATH $PATH /usr/local/bin /usr/bin /bin /usr/local/go/bin
