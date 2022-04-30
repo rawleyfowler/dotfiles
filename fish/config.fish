@@ -6,3 +6,4 @@ if status is-interactive
 	alias vim='nvim'
 	alias vi='nvim'
 end
+export GOPATH=$HOME/.go
