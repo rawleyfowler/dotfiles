@@ -5,6 +5,7 @@ local plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
 plug('https://gitlab.com/rawleyIfowler/melange')
 plug('ap/vim-css-color')
+plug('ap/vim-buftabline')
 plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
 plug('scrooloose/nerdtree', { on = 'NERDTreeToggle'})
 plug('fatih/vim-go', { ['for'] = 'go' })
