@@ -49,6 +49,9 @@ function map(mode, lhs, rhs, opts)
     end
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
+---- Cycling through buffers
+map('n', '<C-h>', ':bprev<cr>', { noremap = true })
+map('n', '<C-l>', ':bnext<cr>', { noremap = true })
 ---- NERDTree
 map('n', '<S-w>', ':NERDTreeToggle<cr>', { noremap = true })
 map('n', '<S-q>', ':NERDTreeClose<cr>', { noremap = true })
