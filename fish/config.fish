@@ -6,4 +6,6 @@ if status is-interactive
 	alias vim='nvim'
 	alias vi='nvim'
 end
+# I build Go
 export GOPATH=$HOME/.go
+export PATH=$PATH:/usr/local/go/bin
