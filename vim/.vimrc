@@ -1,118 +1,106 @@
-"Not compatible with vi, which causes problems
-set nocompatible
-"Get filetype
-filetype on
-filetype plugin on
-filetype indent on
-filetype plugin indent on
-"Plugins in ~/.vim/plugged
-call plug#begin()
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-    Plug 'arzg/vim-swift', { 'for': 'swift' }
-    Plug 'tyru/open-browser.vim'
-    Plug 'junegunn/vim-easy-align'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'preservim/NERDTree', { 'on': 'NERDTreeToggle' }
-    Plug 'itchyny/lightline.vim'
-    Plug 'tpope/vim-surround'
-    Plug 'prabirshrestha/async.vim'
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'prabirshrestha/asyncomplete-gocode.vim', { 'for': 'go' }
-    Plug 'keremc/asyncomplete-clang.vim', { 'for': ['c', 'cpp', 'h', 'hpp'] }
-    Plug 'mattn/vim-lsp-settings'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    Plug 'https://github.com/KabbAmine/yowish.vim'
-    Plug 'https://github.com/ap/vim-css-color'
-    Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
-    Plug 'ap/vim-buftabline'
-    Plug 'dracula/vim'
-    Plug 'fatih/vim-go', { 'for': 'go' }
-    Plug 'frazrepo/vim-rainbow'
-    Plug 'clojure-vim/clojure.vim', { 'for': 'clojure' }
-    Plug 'clojure-vim/async-clj-omni', { 'for': 'clojure' }
-    Plug 'vim-scripts/VimClojure', { 'for': 'clojure' }
-call plug#end()
-"Dracula > All
-colorscheme dracula
-syntax on
-set ai
-set number
-set ts=4
-set sw=4
-set background=dark
-set nowrap
-set hidden
-set showcmd
-set wildmenu
-set hlsearch
-set confirm
-set expandtab
-"Buffer hopping
-nmap <C-h> :bp<cr>
-nmap <C-l> :bn<cr>
-nmap <C-q> :Bclose<cr>
-"Ripgrep with fzf
-nmap <C-f> :Rg<cr>
-"Nerd tree
-nmap <S-w> :NERDTreeToggle<cr>
-"For writing blog posts
-autocmd BufNewFile,BufRead *.html,*.txt,*.blog set spell
-autocmd BufNewFile,BufRead *.html,*.txt,*.blog set wrap
-"Asyncomplete configurations
-inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
-imap <c-space> <Plug>(asyncomplete_force_refresh)
-function! s:check_back_space() abort 
-    let col=col('.') - 1
-    return !col || getline('.')[col - 1] =~ '\s'
-endfunction
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ asyncomplete#force_refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-"AUTO COMPLETES"
-au User asyncomplete_setup call asyncomplete#register_source({
-    \ 'name': 'async_clj_omni',
-    \ 'whitelist': ['clojure'],
-    \ 'completor': function('async_clj_omni#sources#complete'),
-    \ })
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#gocode#get_source_options({
-    \ 'name': 'gocode',
-    \ 'allowlist': ['go'],
-    \ 'completor': function('asyncomplete#sources#gocode#completor'),
-    \ 'config': {
-    \    'gocode_path': expand('~/go/bin/gocode')
-    \ },
-    \ }))
-au User asyncomplete_setup call asyncomplete#register_source(
-    \ asyncomplete#sources#clang#get_source_options({
-    \   'config': {
-    \       'clang_path': '/usr/bin/clang',
-    \       'clang_args': {
-    \           'cpp': ['-std=c++11'] 
-    \       }
-    \   }
-    \}))
-""Load only on Lisp, Clojure, or Emacs Lisp files for rainbow parens
-au FileType clojure,lisp,lsp,cl,l,el,elc,eln call rainbow#load()
-"Toggle on rainbow parens by default if the following file type is detected
-let fts=['clojure', 'lisp', 'lsp', 'cl', 'el', 'eln', 'l', 'elc']
-if index(fts, &filetype) != -1
-    "Clojure style standards like 2 space indents check it out:
-    "https://guide.clojure.style
-    set ts=2
-    set sw=2
-    :RainbowToggle
-endif
-"Configure clojure fuzzy indents and alignments
-let g:clojure_fuzzy_indent=1
-let g:clojure_align_subforms=1
-"Fix weird background color issues with dracula color scheme
-if &term =~ '256color'
-    set t_ut=
-endif
+local set = vim.opt
+local cmd = vim.api.nvim_command
+local au = vim.api.nvim_create_autocmd
+local plug = vim.fn['plug#']
+vim.call('plug#begin', '~/.config/nvim/plugged')
+plug('https://gitlab.com/rawleyIfowler/melange')
+plug('ap/vim-css-color')
+plug('ap/vim-buftabline')
+plug('dag/vim-fish')
+plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
+plug('scrooloose/nerdtree', { on = 'NERDTreeToggle'})
+plug('fatih/vim-go', { ['for'] = 'go' })
+plug('tree-sitter/tree-sitter')
+plug('tpope/vim-surround')
+plug('tpope/vim-fireplace', {['for'] = 'clojure'})
+plug('neovim/nvim-lsp')
+plug('neovim/nvim-lspconfig')
+plug('junegunn/goyo.vim', {['for'] = 'markdown'})
+plug('junegunn/fzf', {['dir'] = '~/.fzf', ['do'] = './install --all'})
+plug('junegunn/fzf.vim')
+plug('jiangmiao/auto-pairs')
+plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
+plug('guns/vim-clojure-static', {['for'] = 'clojure'})
+plug('luochen1990/rainbow', {['for'] = 'clojure'})
+plug('docunext/closetag.vim')
+plug('norcalli/nvim_utils')
+plug('hrsh7th/nvim-cmp')
+plug('hrsh7th/cmp-buffer')
+plug('hrsh7th/cmp-nvim-lsp')
+plug('l3mon4d3/luasnip')
+vim.call('plug#end')
+pcall(require, 'nvim_utils') 
+local cmp = require('cmp')
+-- Basic editor configurations
+set.tabstop = 4
+set.shiftwidth = 4
+set.expandtab = true
+set.number = true
+set.termguicolors = true
+set.autoindent = true
+set.autowrite = true
+set.ai = true
+set.wildignore = {'*/cache/*', '*/tmp*'}
+-- Keybindings
+function map(mode, lhs, rhs, opts)
+    options = {}
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+---- Cycling through buffers
+map('n', '<C-h>', ':bprev<cr>', { noremap = true })
+map('n', '<C-l>', ':bnext<cr>', { noremap = true })
+---- NERDTree
+map('n', '<S-w>', ':NERDTreeToggle<cr>', { noremap = true })
+map('n', '<S-q>', ':NERDTreeClose<cr>', { noremap = true })
+---- Ripgrep
+map('n', '<C-f>', ':Rg<cr>')
+---- Auto-complete
+cmp.setup({
+    snippet = {
+        expand = function(a)
+            -- Enable the lua snips engine
+            require('luasnip').lsp_expand(a.body)
+        end
+    },
+
+    mapping = cmp.mapping.preset.insert({
+        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-Space>'] = cmp.mapping.complete()
+    }),
+
+    sources = {
+        -- Get completions from these sources
+        { name = 'buffer' },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }
+    }
+})
+local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- Colors
+vim.cmd('syntax enable')
+vim.cmd('colorscheme melange')
+vim.o.background = 'dark'
+-- Clojure/Common Lisp specific configurations
+-- Clojure and Common Lisp style is 2 space indent
+-- https://guide.clojure.style
+vim.cmd([[
+    filetype on
+    filetype plugin on
+    filetype plugin indent on
+    autocmd Filetype clojure,clj,lisp,lsp,cl,l let g:rainbow_active=1 
+]])
+require('lspconfig')['clojure_lsp'].setup{ capabilities = cmp_capabilities }
+-- Go specific configurations
+require('lspconfig')['gopls'].setup{ capabilities = cmp_capabilities }
+-- C/C++ specific configurations
+require('lspconfig')['clangd'].setup{ capabilities = cmp_capabilities }
+-- TypeScript specific configurations
+require('lspconfig')['tsserver'].setup{ capabilities = cmp_capabilities }
+-- 2 Tab space standard languages
+vim.cmd([[
+    autocmd Filetype clojure,clj,lisp,lsp,cl,l,javascript,js,typescript,ts setlocal tabstop=2 shiftwidth=2
+]])
