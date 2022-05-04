@@ -6,6 +6,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 plug('https://gitlab.com/rawleyIfowler/melange')
 plug('ap/vim-css-color')
 plug('ap/vim-buftabline')
+plug('dag/vim-fish')
 plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
 plug('scrooloose/nerdtree', { on = 'NERDTreeToggle'})
 plug('fatih/vim-go', { ['for'] = 'go' })
@@ -27,13 +28,13 @@ plug('hrsh7th/nvim-cmp')
 plug('hrsh7th/cmp-buffer')
 plug('hrsh7th/cmp-nvim-lsp')
 plug('l3mon4d3/luasnip')
+plug('leafgarland/typescript-vim', {['for'] = 'typescript'})
 vim.call('plug#end')
 pcall(require, 'nvim_utils') 
 local cmp = require('cmp')
 -- Basic editor configurations
 set.tabstop = 4
 set.shiftwidth = 4
-set.softtabstop = 4
 set.expandtab = true
 set.number = true
 set.termguicolors = true
@@ -88,16 +89,19 @@ vim.o.background = 'dark'
 -- Clojure and Common Lisp style is 2 space indent
 -- https://guide.clojure.style
 vim.cmd([[
-    au FileType clojure,clj,lisp,cl,l call rainbow#load()
-    let fts=['clojure', 'clj', 'lisp', 'lsp', 'cl', 'l']
-    if index(fts, &filetype) != -1
-        set ts=2
-        set sw=2
-        :RainbowToggle
-    endif
+    filetype on
+    filetype plugin on
+    filetype plugin indent on
+    autocmd Filetype clojure,clj,lisp,lsp,cl,l let g:rainbow_active=1 
 ]])
 require('lspconfig')['clojure_lsp'].setup{ capabilities = cmp_capabilities }
 -- Go specific configurations
 require('lspconfig')['gopls'].setup{ capabilities = cmp_capabilities }
 -- C/C++ specific configurations
 require('lspconfig')['clangd'].setup{ capabilities = cmp_capabilities }
+-- TypeScript specific configurations
+require('lspconfig')['tsserver'].setup{ capabilities = cmp_capabilities }
+-- 2 Tab space standard languages
+vim.cmd([[
+    autocmd Filetype clojure,clj,lisp,lsp,cl,l,javascript,js,typescript,ts setlocal tabstop=2 shiftwidth=2
+]])
