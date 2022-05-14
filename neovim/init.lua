@@ -3,7 +3,10 @@ local cmd = vim.api.nvim_command
 local au = vim.api.nvim_create_autocmd
 local plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
-plug('https://gitlab.com/rawleyIfowler/melange')
+-- You can use my custom melange build, un-comment here.
+-- plug('https://gitlab.com/rawleyIfowler/melange')
+-- Yeah I use gruvbox now :L
+plug('morhetz/gruvbox')
 plug('ap/vim-css-color')
 plug('ap/vim-buftabline')
 plug('dag/vim-fish')
@@ -30,7 +33,7 @@ plug('hrsh7th/cmp-nvim-lsp')
 plug('l3mon4d3/luasnip')
 plug('leafgarland/typescript-vim', {['for'] = 'typescript'})
 vim.call('plug#end')
-pcall(require, 'nvim_utils') 
+pcall(require, 'nvim_utils')
 local cmp = require('cmp')
 -- Basic editor configurations
 set.tabstop = 4
@@ -83,8 +86,8 @@ cmp.setup({
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Colors
 vim.cmd('syntax enable')
-vim.cmd('colorscheme melange')
-vim.o.background = 'dark'
+vim.cmd('colo gruvbox')
+vim.o.background = 'light'
 -- Clojure/Common Lisp specific configurations
 -- Clojure and Common Lisp style is 2 space indent
 -- https://guide.clojure.style
@@ -92,7 +95,7 @@ vim.cmd([[
     filetype on
     filetype plugin on
     filetype plugin indent on
-    autocmd Filetype clojure,clj,lisp,lsp,cl,l let g:rainbow_active=1 
+    autocmd Filetype clojure,clj,lisp,lsp,cl,l let g:rainbow_active=1
 ]])
 require('lspconfig')['clojure_lsp'].setup{ capabilities = cmp_capabilities }
 -- Go specific configurations
