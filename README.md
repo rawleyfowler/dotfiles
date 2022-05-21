@@ -7,7 +7,7 @@ I use a customized version of vanilla Emacs for most of my development. I also m
 ## Screenshots
 This is my macbook with Emacs, and zsh.
 
-![image of mac](https://i.imgur.xom/Tt0MxjN.png)
+![image of mac](https://i.imgur.com/gMCQMup.png)
 
 The following is my Parabola system using my forks of [dwm](https://www.github.com/rawleyfowler/dwm), [st](https://www.github.com/rawleyfowler/st), and my NeoVim configuration.
 
