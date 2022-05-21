@@ -10,30 +10,36 @@ plug('morhetz/gruvbox')
 plug('ap/vim-css-color')
 plug('ap/vim-buftabline')
 plug('dag/vim-fish')
+plug('kassio/neoterm')
+plug('tpope/vim-dispatch')
+plug('radenling/vim-dispatch-neovim')
 plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
+plug('Olical/conjure', {['for'] = 'clojure'})
+plug('tpope/vim-fireplace', {['for'] = 'clojure'})
+plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
+plug('guns/vim-clojure-static', {['for'] = 'clojure'})
+plug('clojure-vim/vim-jack-in', {['for'] = 'clojure'})
+plug('luochen1990/rainbow')
 plug('scrooloose/nerdtree', { on = 'NERDTreeToggle'})
 plug('fatih/vim-go', { ['for'] = 'go' })
 plug('tree-sitter/tree-sitter')
 plug('tpope/vim-surround')
-plug('tpope/vim-fireplace', {['for'] = 'clojure'})
 plug('neovim/nvim-lsp')
 plug('neovim/nvim-lspconfig')
 plug('junegunn/goyo.vim', {['for'] = 'markdown'})
 plug('junegunn/fzf', {['dir'] = '~/.fzf', ['do'] = './install --all'})
 plug('junegunn/fzf.vim')
 plug('jiangmiao/auto-pairs')
-plug('guns/vim-clojure-highlight', {['for'] = 'clojure'})
-plug('guns/vim-clojure-static', {['for'] = 'clojure'})
-plug('luochen1990/rainbow', {['for'] = 'clojure'})
 plug('docunext/closetag.vim')
 plug('norcalli/nvim_utils')
 plug('hrsh7th/nvim-cmp')
 plug('hrsh7th/cmp-buffer')
 plug('hrsh7th/cmp-nvim-lsp')
+plug('saadparwaiz1/cmp_luasnip')
 plug('l3mon4d3/luasnip')
 plug('leafgarland/typescript-vim', {['for'] = 'typescript'})
 vim.call('plug#end')
-pcall(require, 'nvim_utils')
+pcall(require, 'nvim_utils') 
 local cmp = require('cmp')
 -- Basic editor configurations
 set.tabstop = 4
@@ -83,28 +89,52 @@ cmp.setup({
         { name = 'luasnip' }
     }
 })
-local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Colors
 vim.cmd('syntax enable')
 vim.cmd('colo gruvbox')
 vim.o.background = 'light'
--- Clojure/Common Lisp specific configurations
--- Clojure and Common Lisp style is 2 space indent
--- https://guide.clojure.style
+-- Rainbow Parens for Clojure, and Lisp
 vim.cmd([[
     filetype on
     filetype plugin on
     filetype plugin indent on
-    autocmd Filetype clojure,clj,lisp,lsp,cl,l let g:rainbow_active=1
+    autocmd Filetype clojure,clj,lisp,lsp,cl,l :RainbowToggle
 ]])
-require('lspconfig')['clojure_lsp'].setup{ capabilities = cmp_capabilities }
--- Go specific configurations
-require('lspconfig')['gopls'].setup{ capabilities = cmp_capabilities }
--- C/C++ specific configurations
-require('lspconfig')['clangd'].setup{ capabilities = cmp_capabilities }
--- TypeScript specific configurations
-require('lspconfig')['tsserver'].setup{ capabilities = cmp_capabilities }
+-- Auto complete
+local opts = { noremap=true, silent=true }
+map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local servers = { 'clojure_lsp', 'gopls', 'clangd', 'tsserver' }
+for _, lsp in pairs(servers) do 
+    require('lspconfig')[lsp].setup {
+        on_attach = on_attach,
+        capabilities = cmp_capabilities,
+        flags = {
+            debounce_text_changes = 150,
+        }
+    }
+end
 -- 2 Tab space standard languages
+-- Clojure and Common Lisp style is 2 space indent
 vim.cmd([[
     autocmd Filetype clojure,clj,lisp,lsp,cl,l,javascript,js,typescript,ts setlocal tabstop=2 shiftwidth=2
 ]])
