@@ -69,9 +69,13 @@
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map))
 
-(use-package neotree
+(use-package hydra)
+
+(use-package lsp-treemacs)
+(use-package treemacs
   :config
-  (global-set-key (kbd "C-c C-w") 'neotree-toggle))
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
+
 
 ;; Icons
 (use-package all-the-icons
@@ -102,26 +106,54 @@
 (use-package evil-smartparens
   :hook ('smartparens-enabled-hook #'evil-smartparens-mode))
 
+;; Which key
 (use-package which-key)
 
-;; LSP packages
+;; LSP/Complete packages
+(use-package yasnippet
+  :config
+  (yas-global-mode))
+
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
-  (lsp-enable-which-key-integration t)
-  (lsp-completion-enable t))
+  (lsp-enable-which-key-integration t))
+
+(use-package company)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (use-package lsp-ui)
+(require 'lsp-ui)
+(lsp-ui-sideline-enable t)
 
-(use-package auto-complete
+(use-package lsp-java)
+(add-hook 'java-mode-hook #'lsp)
+
+(use-package dap-mode
+  :after lsp-mode
   :config
-  (ac-config-default))
-(setq tab-always-indent 'complete)
-(add-to-list 'completion-styles 'initials t)
+  (dap-auto-configure-mode))
+(use-package dap-java
+  :ensure nil)
+
+(use-package helm-lsp)
+(use-package helm
+  :config
+  (helm-mode))
 
 ;; Language modes
+; Java stuff
+(use-package meghanada)
+(add-hook 'java-mode-hook
+          (lambda ()
+            (meghanada-mode t)
+            (setq c-basic-offset 2)
+            (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+(setq meghanada-java-path "java")
+(setq meghanada-maven-path "mvn")
+
 (use-package typescript-mode
   :mode ("\\.tsx?\\'" . typescript-mode)
   :hook (typescript-mode . lsp-deferred)
@@ -146,7 +178,38 @@
 (use-package vimrc-mode)
 (use-package yaml-mode)
 
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
 ;;;; Bindings
+
+;; Splits
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+
+;; Split and open terminal
+(defun split-and-open-terminal ()
+  (interactive)
+  (split-window-below)
+  (other-window 1)
+  (shell))
+(global-set-key (kbd "C-x t") 'split-and-open-terminal)
+
 ;; Ivy
 (global-set-key (kbd "C-s") 'swiper-isearch)
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -189,6 +252,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(helm-minibuffer-history-key "M-p")
  '(package-selected-packages
    '(yaml-mode vimrc-mode json-mode clojure-mode typescript-mode use-package restart-emacs lsp-mode evil-collection)))
 (custom-set-faces
