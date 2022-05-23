@@ -71,11 +71,40 @@
 
 (use-package hydra)
 
+;; Treemacs
 (use-package lsp-treemacs)
 (use-package treemacs
+  :ensure t
+  :defer t
   :config
-  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
-
+  (progn
+    (setq treemacs-display-in-side-window t
+          treemacs-follow-after-init t
+          treemacs-expand-after-init t
+          treemacs-indentation 2
+          treemacs-hide-dot-git-directory t
+          treemacs-indentation-string " "
+          treemacs-max-git-entries 5000
+          treemacs-width 40
+          treemacs-width-increment 1
+          treemacs-width-is-initially-locked t))
+  :bind
+  (:map global-map
+        ("C-x w w" . treemacs-select-window)
+        ("C-x w 1" . treemacs-delete-other-windows)
+        ("C-x w"   . treemacs)))
+(require 'treemacs)
+(treemacs-follow-mode t)
+(treemacs-filewatch-mode t)
+(treemacs-fringe-indicator-mode 'always)
+(treemacs-git-mode 'simple)
+(define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t)
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
 
 ;; Icons
 (use-package all-the-icons
