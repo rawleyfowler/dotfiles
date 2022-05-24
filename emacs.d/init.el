@@ -32,6 +32,7 @@
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4)
 (setq c-basic-offset 4)
+
 ;;;; Package management
 (require 'package)
 (add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
@@ -91,10 +92,10 @@
           treemacs-width-is-initially-locked t))
   :bind
   (:map global-map
-        ("C-x w e" treemacs-edit-workspaces)
         ("C-x w s" . treemacs-select-window)
         ("C-x w 1" . treemacs-delete-other-windows)
         ("C-x w w"   . treemacs)))
+
 (require 'treemacs)
 (treemacs-follow-mode t)
 (treemacs-filewatch-mode t)
