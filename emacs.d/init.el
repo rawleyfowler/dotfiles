@@ -8,6 +8,8 @@
   (global-display-line-numbers-mode)) ;; Line numbers
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; Backups
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
