@@ -2,7 +2,7 @@
 These are my dotfiles, I use them on a 2019 Macbook, and various other Linux systems.
 
 ## Development
-I use a customized version of vanilla Emacs for most of my development. I also maintain a NeoVim configuration that I use for quick edits. I mainly develop for the JVM (Java, and Clojure), or for the frontend with TypeScript (Angular) and Elm. I also program with various flavors of Lisp.
+I use a customized version of vanilla Emacs for most of my development. I also maintain a NeoVim configuration that I use for quick edits. I mainly develop for the JVM (Java, and Clojure), or for the frontend with TypeScript (Angular) and Elm. I also program with various flavors of Lisp. These drastically impact how my editors are configured.
 
 ## Screenshots
 This is my macbook with Emacs, and zsh.
