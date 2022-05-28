@@ -61,6 +61,12 @@
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
   (evil-mode))
+(defun save-and-kill-buffer () ;; Saves and kills a buffer, vim style
+  (interactive)
+  (save-buffer)
+  (kill-buffer))
+(evil-ex-define-cmd "wq" 'save-and-kill-buffer)
+(evil-ex-define-cmd "q" 'kill-buffer)
 (use-package evil-collection
   :after evil
   :ensure t
@@ -208,6 +214,7 @@
   :mode ("\\.md\\'" . markdown-mode)
   :hook (markdown-mode . auto-fill-mode))
 
+(use-package dart-mode)
 (use-package json-mode)
 (use-package vimrc-mode)
 (use-package yaml-mode)
