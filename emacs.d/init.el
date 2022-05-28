@@ -66,12 +66,12 @@
   (interactive)
   (save-buffer)
   (kill-buffer))
-(defun kill-buffer ()
+(defun kill-buffer-evil ()
   (interactive)
   (kill-buffer))
 
 (evil-ex-define-cmd "wq" 'save-and-kill-buffer)
-(evil-ex-define-cmd "q" 'kill-buffer)
+(evil-ex-define-cmd "q" 'kill-buffer-evil)
 
 (use-package evil-collection
   :after evil
