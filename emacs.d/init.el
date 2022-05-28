@@ -61,12 +61,18 @@
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
   (evil-mode))
+
 (defun save-and-kill-buffer () ;; Saves and kills a buffer, vim style
   (interactive)
   (save-buffer)
   (kill-buffer))
+(defun kill-buffer ()
+  (interactive)
+  (kill-buffer))
+
 (evil-ex-define-cmd "wq" 'save-and-kill-buffer)
 (evil-ex-define-cmd "q" 'kill-buffer)
+
 (use-package evil-collection
   :after evil
   :ensure t
