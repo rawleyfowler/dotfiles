@@ -2,8 +2,19 @@
 ;; I was a long time Vim user. But emacs stole my heart.
 
 ;;; Code:
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
+;; Borrowed this from https://github.com/aaronbieber/dotfiles/blob/master/configs/emacs.d/init.el
+(setq initial-scratch-message
+      (concat
+       ";; This buffer is for text that is not saved, and for Lisp evaluation.\n"
+       ";; To create a file, visit it with C-x C-f and enter text in its buffer.\n"
+       ";;\n"
+       ";; __          __  _                            \n"
+       ";; \\ \\        / / | |                           \n"
+       ";;  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___   \n"
+       ";;   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\  \n"
+       ";;    \\  /\\  /  __/ | (_| (_) | | | | | |  __/_ \n"
+       ";;     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___(_)\n"))
+
 (when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode)) ;; Line numbers
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -62,16 +73,23 @@
   (setq evil-split-window-below t)
   (evil-mode))
 
+(defun selective-window-kill ()
+  (when (< 2 (count-windows))
+    (delete-window)))
+
 (defun save-and-kill-buffer () ;; Saves and kills a buffer, vim style
   (interactive)
   (save-buffer)
-  (kill-buffer))
-(defun kill-buffer-evil ()
+  (kill-buffer)
+  (selective-window-kill))
+
+(defun kill-buffer-and-window ()
   (interactive)
-  (kill-buffer))
+  (kill-buffer)
+  (selective-window-kill))
 
 (evil-ex-define-cmd "wq" 'save-and-kill-buffer)
-(evil-ex-define-cmd "q" 'kill-buffer-evil)
+(evil-ex-define-cmd "q" 'kill-buffer-and-window)
 
 (use-package evil-collection
   :after evil
