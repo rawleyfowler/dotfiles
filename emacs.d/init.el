@@ -74,28 +74,28 @@
   (evil-mode))
 
 (defun selective-window-kill ()
-  (when (< 2 (count-windows))
+  (interactive)
+  (when (> (count-windows) 1)
     (delete-window)))
 
-(defun save-and-kill-buffer () ;; Saves and kills a buffer, vim style
+(defun save-kill-buffer () ;; Saves and kills a buffer, vim style
   (interactive)
   (save-buffer)
-  (kill-buffer)
-  (selective-window-kill))
-
-(defun kill-buffer-and-window ()
-  (interactive)
-  (kill-buffer)
   (selective-window-kill))
 
 (evil-ex-define-cmd "wq" 'save-and-kill-buffer)
-(evil-ex-define-cmd "q" 'kill-buffer-and-window)
+(evil-ex-define-cmd "q" 'selective-window-kill)
+(evil-ex-define-cmd "kb" '(lambda ()
+                            (interactive)
+                            (kill-buffer-and-window)))
 
 (use-package evil-collection
   :after evil
   :ensure t
   :config
   (evil-collection-init))
+
+(use-package evil-org)
 
 ;; Project mangement
 (use-package projectile
