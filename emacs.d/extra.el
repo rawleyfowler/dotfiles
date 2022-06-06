@@ -29,6 +29,8 @@
   ('smartparens-enabled-hook #'evil-smartparens-mode))
 
 ;; Others
+(use-package restart-emacs)
+
 (use-package which-key
   :config
   (which-key-mode))
