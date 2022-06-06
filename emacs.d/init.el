@@ -15,6 +15,8 @@
 (transient-mark-mode)
 (show-paren-mode 1)
 
+(setq backup-directory-alist '(("." . "~/.backups")))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (require 'package)
@@ -31,9 +33,6 @@
 	use-package-expand-minimally t))
 
 (require 'use-package)
-
-;; Misc Packages
-(use-package restart-emacs)
 
 ;; Theme
 (use-package modus-themes
