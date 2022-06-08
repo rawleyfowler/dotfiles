@@ -4,11 +4,10 @@
 ;;; Code:
 (require 'lsp-mode)
 ;; Language modes + configurations
+(require 'eglot)
 (use-package typescript-mode
   :mode
   ("\\.tsx?\\'" . typescript-mode)
-  :hook
-  (typescript-mode . lsp-deferred)
   :config
   (setq typescript-indent-level 2))
 
@@ -43,6 +42,15 @@
 ;; No config modes
 (use-package json-mode)
 (use-package yaml-mode)
+
+;; eglot mode hooks
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'typescript-mode 'eglot-ensure)
+(add-hook 'go-mode 'eglot-ensure)
+(add-hook 'clojure-mode 'eglot-ensure)
+
 
 ;; Built-in mode configs
 ; Ruby
