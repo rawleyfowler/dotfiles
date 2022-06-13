@@ -3,6 +3,7 @@
 ;;; This file contains various Emacs modes that I use.
 ;;; Code:
 (require 'lsp-mode)
+(require 'flycheck)
 ;; Language modes + configurations
 (require 'eglot)
 (use-package typescript-mode
@@ -42,20 +43,32 @@
 ;; No config modes
 (use-package json-mode)
 (use-package yaml-mode)
+(use-package d-mode)
 
 ;; eglot mode hooks
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-to-list 'eglot-server-programs
+	     `(c-mode . ("clangd" "--include" "/usr/include/")))
+(add-to-list 'eglot-server-programs
+	     `(c++-mode . ("clangd" "--include" "/usr/include/")))
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'd-mode-hook 'eglot-ensure)
 (add-hook 'typescript-mode 'eglot-ensure)
 (add-hook 'go-mode 'eglot-ensure)
 (add-hook 'clojure-mode 'eglot-ensure)
 
 
 ;; Built-in mode configs
-; Ruby
+;; Ruby
 (add-to-list 'auto-mode-alist
 	     '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist
 	     '("\\(?:Brewfile\\|Capfile\\|Gemfile\\|[rR]akefile\\)\\'" . ruby-mode))
+;; C/C++
+(add-hook 'c++-mode-hook
+	  (lambda () (setq flycheck-clang-include-path
+			   (list (expand-file-name "/usr/include/")))))
+(add-hook 'c-mode-hook
+	  (lambda () (setq flycheck-clang-include-path
+			   (list (expand-file-name "/usr/include/")))))
 ;;; modes.el ends here
