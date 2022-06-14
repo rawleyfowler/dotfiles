@@ -15,6 +15,9 @@
 (transient-mark-mode)
 (show-paren-mode 1)
 
+(when (eq system-type 'gnu/linux)
+  (set-face-attribute 'default nil :font "Terminus"))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (require 'package)
