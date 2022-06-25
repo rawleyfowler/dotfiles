@@ -1,9 +1,37 @@
 *.font: xft:Spleen:style=Medium:size=9
 
 ! Colors
-*.foreground: #f8f8f8
-*.cursorColor: #f8f8f8
-*.background: #202020
+*.foreground: #ffffff
+*.cursorColor: #ffffff
+*.background: #000000
+
+!! Black
+*.color0: #000000
+*.color8: #100f10
+
+!! Red
+*.color1: #ff8059
+*.color9: #ef8b50
+
+!! Green
+*.color2: #44bc44
+*.color10: #70b900
+
+!! Yellow
+*.color3: #d0bc00
+*.color11: #c0c530
+
+!! Blue
+*.color4: #2fafff
+*.color12: #79a8ff
+
+!! Magenta
+*.color5: #feacd0
+*.color13: #f78fe7
+
+!! Cyan
+*.color6: #00d3d0
+*.color14: #4ae2f0
 
 ! URxvt
 URxvt.letterSpace: 1
@@ -15,6 +43,6 @@ URxvt.scrollBar_right: false
 URxvt.depth: 8
 URxvt.iso14755: false
 URxvt.saveline: 2048
-URxvt.borderColor: #202020
+URxvt.borderColor: #000000
 URxvt.internalBorder: 8
 URxvt.urgentOnBell: false
