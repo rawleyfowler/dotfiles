@@ -11,6 +11,8 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 
+(show-paren-mode 1)
+
 (recentf-mode 1)
 
 (require 'package)
@@ -28,12 +30,13 @@
 
 (require 'use-package)
 (use-package modus-themes
-	     :init
-	     (setq modus-themes-bold-constructs t
-		   modus-themes-italic-constructs nil)
-	     (modus-themes-load-themes)
-	     :config
-	     (modus-themes-load-vivendi))
+  :init
+  (setq modus-themes-bold-constructs t
+	modus-themes-italic-constructs nil)
+  (setq modus-themes-mode-line '(borderless (padding . 1)))
+  (modus-themes-load-themes)
+  :config
+  (modus-themes-load-vivendi))
 
 (use-package d-mode)
 (use-package go-mode)
