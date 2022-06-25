@@ -1,5 +1,5 @@
 # Dotfiles
-These are my dotfiles, I use them on a variety of systems, so they have some OS/Platform specific changes. I use a FreeBSD Desktop, Parabola GNU/Linux-libre laptop, and for work, a 2019 Macbook Pro. None of my dotfiles have Windows specific adjustments.
+These are my dotfiles, I use them on a variety of systems, so they have some OS/Platform specific changes. I use a GNU/Linux Desktop, OpenBSD thinkpad, and for work, a 2019 Macbook Pro. None of my dotfiles have Windows specific adjustments.
 
 ## Development
 I use a customized version of GNU Emacs with the Evil extension for most of my development. I also maintain a NeoVim configuration that I use for quick edits. I mainly develop for the JVM (Java, and Clojure), or for the frontend with TypeScript, Angular, and Elm. I also program with various flavors of Lisp (Scheme, Common, Clojure). These drastically impact how my editors are configured.
