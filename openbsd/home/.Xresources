@@ -1,0 +1,20 @@
+*.font: xft:Spleen:style=Medium:size=9
+
+! Colors
+*.foreground: #f8f8f8
+*.cursorColor: #f8f8f8
+*.background: #202020
+
+! URxvt
+URxvt.letterSpace: 1
+URxvt.clipboard.autocopy: true
+URxvt.cursorBlink: false
+URxvt.cursorUnderline: false
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.depth: 8
+URxvt.iso14755: false
+URxvt.saveline: 2048
+URxvt.borderColor: #202020
+URxvt.internalBorder: 8
+URxvt.urgentOnBell: false
