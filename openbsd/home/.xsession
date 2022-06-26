@@ -11,5 +11,5 @@ if [ -f $XRES ]; then
 fi
 
 xrdb -load $XRES &
-
+dwmblocks &
 exec dwm
