@@ -5,6 +5,8 @@
 ;;; that can take advantage of it. Thankfully, I found a compatible
 ;;; WiFi card for my Librebooted x200, now I can use OpenBSD \o/
 ;;; Code:
+(add-to-list 'default-frame-alist '(font . "Spleen-10"))
+
 (setq visible-bell nil)
 
 (tool-bar-mode -1)
@@ -31,8 +33,6 @@
 (require 'use-package)
 (use-package modus-themes
   :init
-  (setq modus-themes-bold-constructs t
-	modus-themes-italic-constructs nil)
   (setq modus-themes-mode-line '(borderless (padding . 1)))
   (modus-themes-load-themes)
   :config
