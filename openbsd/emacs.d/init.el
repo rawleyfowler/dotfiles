@@ -1,4 +1,4 @@
-;;; package --- Rawley Fowler's OpenBSD init.el
+;;; package --- Rawley OpenBSD init.el
 ;;; Commentary:
 ;;; This is my Emacs init.el for OpenBSD. OpenBSD has always been
 ;;; one of my favorite opeating systems, but I have never had hardware
@@ -7,7 +7,8 @@
 ;;; Code:
 (add-to-list 'default-frame-alist '(font . "Spleen-10"))
 
-(setq visible-bell nil)
+(setq visible-bell t)
+(setq-default tab-width 4) 
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -38,20 +39,25 @@
   :config
   (modus-themes-load-vivendi))
 
+;; Language modes
 (use-package d-mode)
 (use-package go-mode)
+(use-package markdown-mode)
 
-(defun save-and-kill-this-buffer ()
+;; Other packages
+(use-package ivy)
+
+(defun save-and-kill-current-buffer ()
   (interactive)
   (save-buffer)
-  (kill-current-buffer))	   
+  (kill-current-buffer))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(modus-themes use-package)))
+ '(package-selected-packages '(md-mode markdown-mode ivy modus-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
