@@ -47,6 +47,7 @@
 ;; Other packages
 (use-package ivy)
 
+;; Custom functions
 (defun save-and-kill-current-buffer ()
   (interactive)
   (save-buffer)
