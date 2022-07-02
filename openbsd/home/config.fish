@@ -3,11 +3,8 @@ if status is-interactive
 end
 
 alias emacs="emacs --no-x-resources"
-alias ruby="ruby30"
-alias rake="rake30"
-alias gem="gem30"
 
-set -x GEM_HOME "$HOME/.local/ruby/3.0/gems"
-set -x GEM_PATH "$HOME/.local/ruby/3.0/gems"
+set -x GEM_HOME "$HOME/.local/ruby"
+set -x GEM_PATH "$HOME/.local/ruby/3.0"
 set -x GOPATH "$HOME/.go"
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin $HOME/.local/share/gem/ruby/3.0/bin
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin $HOME/.local/ruby/3.0/bin
