@@ -8,4 +8,4 @@ alias rake="rake30"
 alias gem="gem30"
 
 set -x GOPATH "$HOME/.go"
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin $HOME/.local/share/gem/ruby/3.0/bin
