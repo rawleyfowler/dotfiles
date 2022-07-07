@@ -5,8 +5,9 @@
 ;;; that can take advantage of it. Thankfully, I found a compatible
 ;;; WiFi card for my Librebooted x200, now I can use OpenBSD \o/
 ;;; Code:
-(add-to-list 'default-frame-alist '(font . "UbuntuMono Nerd Font-15"))
+(add-to-list 'default-frame-alist '(font . "UbuntuMono Nerd Font Mono-15"))
 
+(setq inhibit-startup-screen t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
 (setq-default tab-width 4) 
@@ -25,8 +26,8 @@
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
-(package-refresh-contents)
 
 (eval-and-compile
   (setq use-package-always-ensure t
@@ -36,6 +37,9 @@
 (use-package zenburn-theme)
 (load-theme 'zenburn t)
 
+(require 'ido)
+(ido-mode t)
+
 ;; Language modes
 (use-package d-mode)
 (use-package go-mode)
@@ -43,9 +47,9 @@
   :ensure t)
 
 ;; Other packages
-(use-package ivy)
-(use-package helm)
-(require 'helm)
+(use-package smex)
+(require 'smex)
+(global-set-key (kbd "M-x") 'smex)
 
 ;; Custom functions
 (defun save-and-kill-current-buffer ()
@@ -58,8 +62,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("70cfdd2e7beaf492d84dfd5f1955ca358afb0a279df6bd03240c2ce74a578e9e" default))
  '(package-selected-packages
    '(helm zenburn-theme md-mode markdown-mode ivy modus-themes use-package)))
 (custom-set-faces
