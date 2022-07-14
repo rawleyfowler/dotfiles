@@ -5,12 +5,12 @@
 ;;; that can take advantage of it. Thankfully, I found a compatible
 ;;; WiFi card for my Librebooted x200, now I can use OpenBSD \o/
 ;;; Code:
-(add-to-list 'default-frame-alist '(font . "UbuntuMono Nerd Font Mono-15"))
+(add-to-list 'default-frame-alist '(font . "UbuntuMono Nerd Font Mono-16"))
 
 (setq inhibit-startup-screen t)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
-(setq-default tab-width 4) 
+(setq-default tab-width 4)
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -42,11 +42,21 @@
 
 ;; Language modes
 (use-package d-mode)
+(use-package yaml-mode)
 (use-package go-mode)
 (use-package markdown-mode
   :ensure t)
 
 ;; Other packages
+(use-package web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (use-package smex)
 (require 'smex)
 (global-set-key (kbd "M-x") 'smex)
@@ -56,6 +66,7 @@
   (interactive)
   (save-buffer)
   (kill-current-buffer))
+(global-set-key (kbd "C-= C-g") 'indent-code-rigidly)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -63,7 +74,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(helm zenburn-theme md-mode markdown-mode ivy modus-themes use-package)))
+   '(yaml-mode helm zenburn-theme md-mode markdown-mode ivy modus-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
