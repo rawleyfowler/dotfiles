@@ -3,10 +3,13 @@ local cmd = vim.api.nvim_command
 local au = vim.api.nvim_create_autocmd
 local plug = vim.fn['plug#']
 
+-- Plugins
 vim.call('plug#begin', '~/.config/nvim/plugged')
 plug('jnurmine/zenburn')
 plug('ap/vim-css-color')
 plug('ap/vim-buftabline')
+plug('kana/vim-textobj-user')
+plug('whatyouhide/vim-textobj-erb')
 plug('dag/vim-fish')
 plug('kassio/neoterm')
 plug('tpope/vim-dispatch')
@@ -51,6 +54,7 @@ set.autoindent = true
 set.autowrite = true
 set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
+
 -- Keybindings
 function map(mode, lhs, rhs, opts)
     options = {}
@@ -59,12 +63,15 @@ function map(mode, lhs, rhs, opts)
     end
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
+
 ---- Cycling through buffers
 map('n', '<C-h>', ':bprev<cr>', { noremap = true })
 map('n', '<C-l>', ':bnext<cr>', { noremap = true })
+
 ---- NERDTree
 map('n', '<S-w>', ':NERDTreeToggle<cr>', { noremap = true })
 map('n', '<S-q>', ':NERDTreeClose<cr>', { noremap = true })
+
 ---- Ripgrep
 map('n', '<C-f>', ':Rg<cr>')
 ---- Auto-complete
@@ -126,7 +133,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local servers = { 'clojure_lsp', 'gopls', 'clangd', 'tsserver' }
+local servers = { 'clojure_lsp', 'gopls', 'clangd', 'tsserver', 'solargraph' }
 for _, lsp in pairs(servers) do
     require('lspconfig')[lsp].setup {
         on_attach = on_attach,
@@ -136,6 +143,7 @@ for _, lsp in pairs(servers) do
         }
     }
 end
+
 -- Java auto complete/LSP
 local jdtls_cfg = {
     cmd = {
@@ -159,7 +167,6 @@ if vim.bo.filetype == 'java' then
 end
 
 -- 2 Tab space standard languages
--- Clojure and Common Lisp style is 2 space indent
 vim.cmd([[
 autocmd Filetype ruby,rb,clojure,clj,lisp,lsp,cl,l,javascript,js,typescript,ts setlocal tabstop=2 shiftwidth=2
 ]])
