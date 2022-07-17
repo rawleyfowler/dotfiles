@@ -2,11 +2,9 @@ local set = vim.opt
 local cmd = vim.api.nvim_command
 local au = vim.api.nvim_create_autocmd
 local plug = vim.fn['plug#']
+
 vim.call('plug#begin', '~/.config/nvim/plugged')
--- You can use my custom melange build, un-comment here.
--- plug('https://gitlab.com/rawleyIfowler/melange')
--- Yeah I use gruvbox now :L
-plug('morhetz/gruvbox')
+plug('jnurmine/zenburn')
 plug('ap/vim-css-color')
 plug('ap/vim-buftabline')
 plug('dag/vim-fish')
@@ -43,12 +41,12 @@ plug('leafgarland/typescript-vim', {['for'] = 'typescript'})
 vim.call('plug#end')
 pcall(require, 'nvim_utils')
 local cmp = require('cmp')
+
 -- Basic editor configurations
 set.tabstop = 4
 set.shiftwidth = 4
 set.expandtab = true
 set.number = true
-set.termguicolors = true
 set.autoindent = true
 set.autowrite = true
 set.ai = true
@@ -91,10 +89,12 @@ cmp.setup({
         { name = 'luasnip' }
     }
 })
+
 -- Colors
 vim.cmd('syntax enable')
-vim.cmd('colo gruvbox')
+vim.cmd('colo zenburn')
 vim.o.background = 'light'
+
 -- Rainbow Parens for Clojure, and Lisp
 vim.cmd([[
 filetype on
@@ -102,6 +102,7 @@ filetype plugin on
 filetype plugin indent on
 autocmd Filetype clojure,clj,lisp,lsp,cl,l :RainbowToggle
 ]])
+
 -- Auto complete
 local opts = { noremap=true, silent=true }
 map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -156,8 +157,9 @@ local jdtls_cfg = {
 if vim.bo.filetype == 'java' then
     require('jdtls').start_or_attach(jdtls_cfg)
 end
+
 -- 2 Tab space standard languages
 -- Clojure and Common Lisp style is 2 space indent
 vim.cmd([[
-autocmd Filetype clojure,clj,lisp,lsp,cl,l,javascript,js,typescript,ts setlocal tabstop=2 shiftwidth=2
+autocmd Filetype ruby,rb,clojure,clj,lisp,lsp,cl,l,javascript,js,typescript,ts setlocal tabstop=2 shiftwidth=2
 ]])
