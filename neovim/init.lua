@@ -13,6 +13,7 @@ plug('whatyouhide/vim-textobj-erb')
 plug('dag/vim-fish')
 plug('kassio/neoterm')
 plug('tpope/vim-dispatch')
+plug('tpope/vim-haml')
 plug('radenling/vim-dispatch-neovim')
 plug('clojure-vim/clojure.vim', {['for'] = 'clojure'})
 plug('Olical/conjure', {['for'] = 'clojure'})
@@ -28,7 +29,6 @@ plug('tpope/vim-surround')
 plug('neovim/nvim-lsp')
 plug('neovim/nvim-lspconfig')
 plug('williamboman/nvim-lsp-installer')
-plug('mfussenegger/nvim-jdtls')
 plug('junegunn/goyo.vim', {['for'] = 'markdown'})
 plug('junegunn/fzf', {['dir'] = '~/.fzf', ['do'] = './install --all'})
 plug('junegunn/fzf.vim')
@@ -51,7 +51,11 @@ set.shiftwidth = 4
 set.expandtab = true
 set.number = true
 set.autoindent = true
+set.smartindent = true
 set.autowrite = true
+set.hlsearch = false
+set.incsearch = true
+set.wrap = false
 set.ai = true
 set.wildignore = {'*/cache/*', '*/tmp*'}
 
@@ -107,7 +111,7 @@ vim.cmd([[
 filetype on
 filetype plugin on
 filetype plugin indent on
-autocmd Filetype clojure,clj,lisp,lsp,cl,l :RainbowToggle
+autocmd Filetype clojure,clj,lisp,lsp,cl,l,elisp :RainbowToggle
 ]])
 
 -- Auto complete
@@ -142,28 +146,6 @@ for _, lsp in pairs(servers) do
             debounce_text_changes = 150,
         }
     }
-end
-
--- Java auto complete/LSP
-local jdtls_cfg = {
-    cmd = {
-        'java',
-        '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-        '-Dosgi.bundles.defaultStartLevel=4',
-        '-Declipse.product=org.eclipse.jdt.ls.core.product',
-        '-Dlog.protocol=true',
-        '-Dlog.level=ALL',
-        '-Xms1g',
-        '--add-modules=ALL-SYSTEM',
-        '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        '-jar', '~/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.2.400.v20211117-0650.jar',
-        '-configuration', '~/.local/share/nvim/lsp_servers/jdtls/config_mac'
-    },
-    root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'})
-}
-if vim.bo.filetype == 'java' then
-    require('jdtls').start_or_attach(jdtls_cfg)
 end
 
 -- 2 Tab space standard languages
