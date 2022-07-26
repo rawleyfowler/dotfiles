@@ -24,10 +24,11 @@ cmp.setup({
 	},
 
 	mapping = cmp.mapping.preset.insert({
-		['<C-y>'] = cmp.mapping.confirm({ select = true }),
+		['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+		['<cr>'] = cmp.mapping.confirm({ select = true }),
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
+		['<C-Space>'] = cmp.mapping.complete(),
 	}),
 
 	formatting = {
@@ -102,3 +103,16 @@ require('luasnip.loaders.from_vscode').lazy_load({
 	include = nil,
 	exclude = {},
 })
+
+-- Auto complete
+vim.cmd([[
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+]])
