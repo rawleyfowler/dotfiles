@@ -6,10 +6,7 @@ return require('packer').startup(function()
 
 	-- Color theme/aesthetics
 	use 'beikome/cosme.vim'
-	use 'vim-airline/vim-airline'
-	use 'vim-airline/vim-airline-themes'
 	use 'ajmwagar/vim-emoticons'
-	use 'ap/vim-buftabline'
 
 	-- tpope
 	use 'tpope/vim-surround'
@@ -24,6 +21,11 @@ return require('packer').startup(function()
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'l3mon4d3/luasnip'
 	use 'onsails/lspkind.nvim'
+
+	-- Language specific
+	use 'groenewege/vim-less'
+	use 'vim-ruby/vim-ruby'
+	use 'fatih/vim-go'
 
 	-- Others
 	use ('junegunn/fzf', { run = function() vim.fn['fzf#install'](0) end })
