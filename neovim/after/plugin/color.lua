@@ -7,5 +7,5 @@ local cl = function(t, o)
 end
 
 cl('LineNr', {
-	bg = '#444444'
+	bg = '#222222',
 })
