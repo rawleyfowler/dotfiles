@@ -7,3 +7,6 @@ nnoremap('<C-l>', ':bnext<cr>')
 
 -- Fuzzy finder (fzf)
 nmap('<C-f>', ':Rg<cr>')
+
+-- NetRW
+nnoremap('<S-w>', ':Ex<cr>')
