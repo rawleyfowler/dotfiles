@@ -5,3 +5,4 @@ These are my dotfiles, I use them on 2 systems, a Librebooted Thinkpad x200 on O
 100% of my development happens with NeoVim, on Unix based machines. I develop mostly for the web, I use Ruby, Clojure, TypeScript, among others. These languages influence my dotfiles quite heavily and you may have troubles copying my setup if you plan to use other languages.
 
 ## Screenshots
+![Void Linux](https://cdn.discordapp.com/attachments/635625917623828520/1001229393882001408/2022-07-25-144658_1920x1080_scrot.png)
