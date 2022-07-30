@@ -26,6 +26,7 @@ return require('packer').startup(function()
 	use 'groenewege/vim-less'
 	use 'vim-ruby/vim-ruby'
 	use 'fatih/vim-go'
+	use 'ocaml/vim-ocaml'
 
 	-- Others
 	use ('junegunn/fzf', { run = function() vim.fn['fzf#install'](0) end })
