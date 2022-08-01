@@ -64,7 +64,7 @@ local function config(conf)
 end
 
 -- LSP configurations
-local simple_language_servers = { 'tsserver', 'solargraph' }
+local simple_language_servers = { 'tsserver', 'solargraph', 'ocamllsp' }
 
 for _, v in ipairs(simple_language_servers) do
 	require('lspconfig')[v].setup(config())
