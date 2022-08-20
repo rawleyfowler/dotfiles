@@ -35,7 +35,11 @@
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex))
 (use-package tuareg)
+(use-package utop
+  :ensure t)
 (use-package haml-mode)
+
+(setq utop-commands "opam config exec -- utop -emacs")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -46,7 +50,7 @@
  '(custom-safe-themes
    '("3d2e532b010eeb2f5e09c79f0b3a277bfc268ca91a59cdda7ffd056b868a03bc" default))
  '(package-selected-packages
-   '(haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
+   '(utop haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
