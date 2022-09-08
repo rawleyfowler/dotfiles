@@ -27,6 +27,10 @@
 (require 'ido)
 (ido-mode 1)
 
+(setq indent-tabs-mode nil)
+(setq c-basic-offset 4)
+(setq js-indent-level 2)
+
 ;; Packages
 (require 'use-package)
 (use-package gruber-darker-theme)
@@ -38,6 +42,8 @@
 (use-package utop
   :ensure t)
 (use-package haml-mode)
+(use-package rescript-mode)
+(use-package reason-mode)
 
 (setq utop-commands "opam config exec -- utop -emacs")
 
@@ -50,7 +56,7 @@
  '(custom-safe-themes
    '("3d2e532b010eeb2f5e09c79f0b3a277bfc268ca91a59cdda7ffd056b868a03bc" default))
  '(package-selected-packages
-   '(utop haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
+   '(reason-mode rescript-mode utop haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
