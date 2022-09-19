@@ -5,7 +5,7 @@
 ;;; that can take advantage of it. Thankfully, I found a compatible
 ;;; WiFi card for my Librebooted x200, now I can use OpenBSD \o/
 ;;; Code:
-(add-to-list 'default-frame-alist '(font . "Spleen-15"))
+(add-to-list 'default-frame-alist '(font . "Spleen-10"))
 
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
@@ -25,14 +25,15 @@
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(package-refresh-contents)
+  (package-install 'use-package)
+  (package-refresh-contents))
 
 (eval-and-compile
   (setq use-package-always-ensure t
 	use-package-expand-minimally t))
 
 (require 'use-package)
+(use-package modus-themes)
 (load-theme 'modus-vivendi t)
 
 (require 'ido)
@@ -56,19 +57,4 @@
 (use-package reason-mode)
 
 (setq utop-commands "opam config exec -- utop -emacs")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("70cfdd2e7beaf492d84dfd5f1955ca358afb0a279df6bd03240c2ce74a578e9e" default))
- '(package-selected-packages
-   '(reason-mode rescript-mode haml-mode utop tuareg smex helm zenburn-theme md-mode markdown-mode ivy modus-themes use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 ;; end .emacs
