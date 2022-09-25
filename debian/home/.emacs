@@ -44,8 +44,16 @@
 (use-package haml-mode)
 (use-package rescript-mode)
 (use-package reason-mode)
+(use-package dune)
+(use-package dune-format)
+(if (package-installed-p 'dune-format)
+    (add-hook 'dune-mode-hook 'dune-format-on-save-mode))
 
 (setq utop-commands "opam config exec -- utop -emacs")
+
+(defun copy-all ()
+  (interactive)
+  (clipboard-kill-ring-save (point-min) (point-max)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -55,8 +63,9 @@
  '(custom-enabled-themes '(gruber-darker))
  '(custom-safe-themes
    '("3d2e532b010eeb2f5e09c79f0b3a277bfc268ca91a59cdda7ffd056b868a03bc" default))
+ '(ispell-dictionary nil)
  '(package-selected-packages
-   '(reason-mode rescript-mode utop haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
+   '(dune dune-format reason-mode rescript-mode utop haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
