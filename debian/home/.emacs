@@ -1,13 +1,13 @@
-;;; package --- Rawley Linux .emacs
+;;; package --- Rawley's Linux .emacs
 ;;; Commentary:
-;;; This is my Emacs init.el for Linx. This is used on a Artix Linux machine
+;;; This is my Emacs init.el for Linx.  This is used on a Artix Linux machine
 ;;; and a Debian Linux machine.
 ;;; Code:
 (add-to-list 'default-frame-alist '(font . "monospace-14"))
 
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
-(setq-default tab-width 4) 
+(setq-default tab-width 4)
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -42,7 +42,9 @@
 ;; Packages
 (require 'use-package)
 (use-package dumb-jump)
-(use-package fly-check)
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 (use-package haml-mode)
 (use-package smex
   :config
@@ -91,3 +93,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide '.emacs)
+;;; .emacs ends here
