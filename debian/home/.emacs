@@ -1,28 +1,36 @@
-(tool-bar-mode 0)
+;;; package --- Rawley Linux .emacs
+;;; Commentary:
+;;; This is my Emacs init.el for Linx. This is used on a Artix Linux machine
+;;; and a Debian Linux machine.
+;;; Code:
+(add-to-list 'default-frame-alist '(font . "monospace-14"))
+
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
+(setq-default tab-width 4) 
+
+(tool-bar-mode -1)
 (scroll-bar-mode -1)
-(set-language-environment "UTF-8")
-(prefer-coding-system 'utf-8)
-(set-frame-font "Ubuntu Mono-16" nil t)
-(transient-mark-mode)
+(menu-bar-mode -1)
 (show-paren-mode 1)
-(setq inhibit-startup-screen t)
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(defalias 'yes-or-no-p 'y-or-n-p)
+(recentf-mode 1)
 
 (require 'package)
-(add-to-list 'package-archives
-	     '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+  (package-install 'use-package)
+  (package-refresh-contents))
 
 (eval-and-compile
   (setq use-package-always-ensure t
 	use-package-expand-minimally t))
+
+(require 'use-package)
+(use-package modus-themes)
+(load-theme 'modus-operandi t)
 
 (require 'ido)
 (ido-mode 1)
@@ -33,39 +41,50 @@
 
 ;; Packages
 (require 'use-package)
-(use-package gruber-darker-theme)
+(use-package dumb-jump)
+(use-package fly-check)
+(use-package haml-mode)
 (use-package smex
   :config
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex))
+
+;; Editing
+(require 'flycheck)
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
+(setq flycheck-display-errors-delay 0.1)
+
+(require 'dumb-jump)
+(setq dumb-jump-force-searcher 'ag)
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+;; Language Specific
+
+;;;; OCaml/Reason
 (use-package tuareg)
 (use-package utop
   :ensure t)
-(use-package haml-mode)
 (use-package rescript-mode)
 (use-package reason-mode)
 (use-package dune)
-(use-package dune-format)
-(if (package-installed-p 'dune-format)
-    (add-hook 'dune-mode-hook 'dune-format-on-save-mode))
-
 (setq utop-commands "opam config exec -- utop -emacs")
 
-(defun copy-all ()
-  (interactive)
-  (clipboard-kill-ring-save (point-min) (point-max)))
+;;;; Perl
+(fset 'perl-mode 'cperl-mode)
+(add-hook 'cperl-mode-hook 'flycheck-mode)
 
+;; end .emacs
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(gruber-darker))
+ '(custom-enabled-themes '(modus-operandi))
  '(custom-safe-themes
-   '("3d2e532b010eeb2f5e09c79f0b3a277bfc268ca91a59cdda7ffd056b868a03bc" default))
- '(ispell-dictionary nil)
+   '("92d350334df87fe61a682518ff214c773625c6d5ace8060d128adc550bc60c9b" "ecc077ef834d36aa9839ec7997aad035f4586df7271dd492ec75a3b71f0559b3" default))
  '(package-selected-packages
-   '(dune dune-format reason-mode rescript-mode utop haml-mode tuareg caml-mode ocaml-mode smex gruber-darker-theme use-package)))
+   '(perl-docnow perlnow dune dune-mode borland-blue-theme reason-mode rescript-mode haml-mode utop tuareg smex modus-themes use-package))
+ '(whitespace-style '(space-mark tab-mark)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
