@@ -8,9 +8,11 @@ alias vi='nvim'
 
 GOPATH="$HOME/.go"
 GEM_HOME="$HOME/.gems"
+GEM_PATH="$HOME/.gems"
 
 export GOPATH
 export GEM_HOME
+export GEM_PATH
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f /etc/profile.d/rvm.sh ] && source /etc/profile.d/rvm.sh
