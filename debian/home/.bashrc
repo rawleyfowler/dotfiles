@@ -9,8 +9,6 @@ alias vi='nvim'
 GOPATH="$HOME/.go"
 GEM_HOME="$HOME/.gems"
 
-PS1='\W : λ '
-
 export GOPATH
 export GEM_HOME
 
@@ -32,3 +30,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # RVM likes the gem root path to be the first element in the path
 PATH="$GEM_HOME/bin:/usr/local/bin/go:$GOPATH/bin:$PATH"
+
+PS1='[\u@\h \W]\$ '
+export PS1
