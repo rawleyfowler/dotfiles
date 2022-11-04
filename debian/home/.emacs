@@ -102,7 +102,15 @@
   :init (global-flycheck-mode))
 
 ;;;; OCaml/Reason
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
+(use-package ocamlformat)
+(require 'ocamlformat)
 (use-package tuareg)
+(add-hook 'tuareg-mode-hook (lambda ()
+  (define-key tuareg-mode-map (kbd "C-M-<tab>") #'ocamlformat)
+  (add-hook 'before-save-hook #'ocamlformat-before-save)))
 (use-package utop
   :ensure t)
 (use-package rescript-mode)
@@ -114,7 +122,6 @@
 (fset 'perl-mode 'cperl-mode)
 (add-hook 'cperl-mode-hook 'flycheck-mode)
 
-;; end .emacs
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
