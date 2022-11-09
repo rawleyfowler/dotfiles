@@ -1,0 +1,31 @@
+#!/bin/sh
+
+sticky yes
+
+# Keys
+bind-key M-d /usr/local/bin/dmenu_run
+bind-key CM-r reload
+bind M-f window-fullscreen
+bind M-h window-cycle
+bind M-l window-rcycle
+
+
+fontname "terminus:pixelsize=12:bold"
+
+# Appearance
+borderwidth 2
+color activeborder "#010101"
+color inactiveborder "#77777"
+color urgencyborder "#ff2222"
+
+color font "#010101"
+color selfont "#010101"
+color menubg "#ffffff"
+color menufg "#010101"
+
+gap 8 8 8 8
+
+# Commands
+command emacs emacs
+command firefox firefox
+command top "xterm -e htop"
