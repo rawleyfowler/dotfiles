@@ -1,9 +1,9 @@
-;;; package --- Rawley's Linux .emacs
+;;; package --- Rawley's FreeBSD .emacs
 ;;; Commentary:
-;;; This is my Emacs init.el for Linx.  This is used on a Artix Linux machine
-;;; and a Debian Linux machine.
+;;; This is my .emacs for FreeBSD.
+;;; Available with my other dotfiles at: https://github.com/rawleyfowler/dotfiles
 ;;; Code:
-(add-to-list 'default-frame-alist '(font . "monospace-14"))
+(add-to-list 'default-frame-alist '(font . "terminus-12"))
 
 (unless (file-exists-p "~/.auto-save")
   (make-directory "~/.auto-save"))
@@ -46,8 +46,6 @@
 (ido-mode 1)
 
 (setq indent-tabs-mode nil)
-(setq c-basic-offset 4)
-(setq js-indent-level 2)
 
 ;; Packages
 (require 'use-package)
@@ -61,7 +59,7 @@
   :config
   (yas-global-mode 1))
 (use-package yasnippet-snippets)
-  
+ 
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
@@ -127,12 +125,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(tango-dark))
- '(custom-safe-themes
-   '("92d350334df87fe61a682518ff214c773625c6d5ace8060d128adc550bc60c9b" "ecc077ef834d36aa9839ec7997aad035f4586df7271dd492ec75a3b71f0559b3" default))
  '(package-selected-packages
-   '(company lsp-ui lsp-metals lsp-mode sbt-mode yaml-mode docker yasnippet-snippets perl-docnow perlnow dune dune-mode borland-blue-theme reason-mode rescript-mode haml-mode utop tuareg smex modus-themes use-package))
- '(whitespace-style '(space-mark tab-mark)))
+   '(dune reason-mode rescript-mode utop tuareg ocamlformat sbt-mode scala-mode smex haml-mode flycheck yasnippet-snippets yasnippet dumb-jump docker dockerfile-mode yaml-mode modus-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -142,3 +136,4 @@
 
 (provide '.emacs)
 ;;; .emacs ends here
+ 
