@@ -39,6 +39,7 @@
 	use-package-expand-minimally t))
 
 (require 'use-package)
+(use-package org)
 (use-package modus-themes)
 (load-theme 'modus-operandi t)
 
@@ -70,10 +71,6 @@
   (global-set-key (kbd "M-x") 'smex))
 
 ;; Editing
-(require 'flycheck)
-(setq flycheck-check-syntax-automatically '(mode-enabled save))
-(setq flycheck-display-errors-delay 0.1)
-
 (require 'dumb-jump)
 (setq dumb-jump-force-searcher 'ag)
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -81,23 +78,6 @@
 ;; Enable scala-mode for highlighting, indentation and motion commands
 (use-package scala-mode
   :interpreter ("scala" . scala-mode))
-
-;; Enable sbt mode for executing sbt commands
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config
-  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-  ;; allows using SPACE when in the minibuffer
-  (substitute-key-definition
-   'minibuffer-complete-word
-   'self-insert-command
-   minibuffer-local-completion-map)
-   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-   (setq sbt:program-options '("-Dsbt.supershell=false")))
-
-;; Enable nice rendering of diagnostics like compile errors.
-(use-package flycheck
-  :init (global-flycheck-mode))
 
 ;;;; OCaml/Reason
 ;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
@@ -136,4 +116,3 @@
 
 (provide '.emacs)
 ;;; .emacs ends here
- 
