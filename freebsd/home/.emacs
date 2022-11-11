@@ -39,6 +39,8 @@
 	use-package-expand-minimally t))
 
 (require 'use-package)
+
+;; Packages
 (use-package org)
 (use-package modus-themes)
 (load-theme 'modus-operandi t)
@@ -48,8 +50,6 @@
 
 (setq indent-tabs-mode nil)
 
-;; Packages
-(require 'use-package)
 (use-package yaml-mode)
 (use-package dockerfile-mode)
 (use-package docker
@@ -61,9 +61,6 @@
   (yas-global-mode 1))
 (use-package yasnippet-snippets)
  
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
 (use-package haml-mode)
 (use-package smex
   :config
@@ -106,7 +103,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dune reason-mode rescript-mode utop tuareg ocamlformat sbt-mode scala-mode smex haml-mode flycheck yasnippet-snippets yasnippet dumb-jump docker dockerfile-mode yaml-mode modus-themes use-package)))
+   '(dune reason-mode rescript-mode utop tuareg ocamlformat scala-mode smex haml-mode yasnippet-snippets yasnippet dumb-jump docker dockerfile-mode yaml-mode modus-themes use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
