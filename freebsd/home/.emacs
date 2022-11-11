@@ -42,6 +42,7 @@
 
 ;; Packages
 (use-package org)
+(setq org-mode-hook nil)
 (use-package modus-themes)
 (load-theme 'modus-operandi t)
 
@@ -55,12 +56,7 @@
 (use-package docker
   :ensure t
   :bind ("C-c d" . docker))
-(use-package dumb-jump)
-(use-package yasnippet
-  :config
-  (yas-global-mode 1))
-(use-package yasnippet-snippets)
- 
+(use-package dumb-jump) 
 (use-package haml-mode)
 (use-package smex
   :config
@@ -96,20 +92,6 @@
 ;;;; Perl
 (fset 'perl-mode 'cperl-mode)
 (add-hook 'cperl-mode-hook 'flycheck-mode)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(dune reason-mode rescript-mode utop tuareg ocamlformat scala-mode smex haml-mode yasnippet-snippets yasnippet dumb-jump docker dockerfile-mode yaml-mode modus-themes use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (provide '.emacs)
 ;;; .emacs ends here
