@@ -1,33 +1,3 @@
-;;; package --- Rawley's FreeBSD .emacs
-;;; Commentary:
-;;; This is my .emacs for FreeBSD.
-;;; Available with my other dotfiles at: https://github.com/rawleyfowler/dotfiles
-;;; Code:
-(add-to-list 'default-frame-alist '(font . "terminus-12"))
-
-(unless (file-exists-p "~/.auto-save")
-  (make-directory "~/.auto-save"))
-(defvar autosave-dir (concat "~/.auto-save" "/")) ; Auto save path
-(make-directory autosave-dir t)
-(setq auto-save-file-name-transforms
-      `(("\\(?:[^/]*/\\)*\\(.*\\)" ,(concat autosave-dir "\\1") t)))
-
-(setq package-enable-at-startup nil)
-(setq visible-bell nil)
-(setq ring-bell-function 'ignore)
-(setq shell-file-name "bash")
-(setq shell-command-switch "-ic")
-(setq-default tab-width 4)
-
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(show-paren-mode 1)
-(recentf-mode 1)
-
-(require 'package)
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -42,7 +12,6 @@
 
 ;; Packages
 (use-package org)
-(setq org-mode-hook nil)
 (use-package modus-themes)
 (load-theme 'modus-operandi t)
 
@@ -56,17 +25,11 @@
 (use-package docker
   :ensure t
   :bind ("C-c d" . docker))
-(use-package dumb-jump) 
 (use-package haml-mode)
 (use-package smex
   :config
   (smex-initialize)
   (global-set-key (kbd "M-x") 'smex))
-
-;; Editing
-(require 'dumb-jump)
-(setq dumb-jump-force-searcher 'ag)
-(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
 ;; Enable scala-mode for highlighting, indentation and motion commands
 (use-package scala-mode
