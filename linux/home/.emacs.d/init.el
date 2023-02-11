@@ -3,9 +3,9 @@
 ;;; This is my Void Linux init.el
 ;;; Code:
 
-(add-to-list 'default-frame-alist '(font . "Iosevka NerdFont-14"))
+(add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-14"))
 
-(defvar autosave-dir "~/.auto-save/")
+(defconst autosave-dir "~/.auto-save/")
 (unless (file-exists-p autosave-dir)
   (make-directory autosave-dir t))
 (setq auto-save-file-name-transforms
@@ -17,6 +17,7 @@
 (setq shell-file-name "bash")
 (setq shell-command-switch "-ic")
 (setq-default tab-width 4)
+(global-linum-mode)
 
 (require 'ido)
 (ido-mode 1)
@@ -38,7 +39,8 @@
   (setq use-package-always-ensure t
 		use-package-expand-minimally t))
 
-(defvar packages '(better-defaults
+(defvar packages '(fzf
+				   better-defaults
 				   projectile
 				   clojure-mode
 				   cider
@@ -50,12 +52,52 @@
 				   go-mode
 				   raku-mode
 				   tuareg
+				   lsp-mode
+				   company
+				   treemacs
+				   lsp-treemacs
+				   ivy
+				   lsp-ivy
 				   magit))
 (when (not package-archive-contents)
   (package-refresh-contents))
 (dolist (package packages)
   (unless (package-installed-p package)
 	(package-install package)))
+
+(require 'fzf)
+(global-set-key (kbd "C-x f") 'fzf)
+(setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
+      fzf/executable "fzf"
+      fzf/git-grep-args "-i --line-number %s"
+      ;; command used for `fzf-grep-*` functions
+      ;; example usage for ripgrep:
+      ;; fzf/grep-command "rg --no-heading -nH"
+      fzf/grep-command "grep -nrH"
+      ;; If nil, the fzf buffer will appear at the top of the window
+      fzf/position-bottom t
+      fzf/window-height 15)
+
+(add-to-list 'auto-mode-alist '("\\.raku\\?\\(test\\|mod\\)$" . raku-mode))
+
+(require 'projectile)
+(projectile-mode)
+(setq projectile-completion-system 'ivy)
+(global-set-key (kbd "C-c p") 'projectile-command-map)
+
+(require 'lsp-mode)
+(setq lsp-keymap-prefix "C-c l")
+(setq raku-indent-level 4)
+(setq go-indent-level 4)
+(add-hook 'raku-mode-hook #'lsp-deferred)
+(add-hook 'perl-mode-hook #'lsp-deferred)
+
+(require 'company)
+(add-hook 'lsp-mode 'company-mode)
+(setq company-idle-delay 0.0)
+(setq company-minimum-prefix-length 1)
+(global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
+
 
 (require 'smex)
 (smex-initialize)
