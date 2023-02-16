@@ -14,7 +14,7 @@
 (setq package-enable-at-startup nil)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
-(setq shell-file-name "bash")
+(setq shell-file-name "/bin/bash")
 (setq shell-command-switch "-ic")
 (setq-default tab-width 4)
 (global-linum-mode)
@@ -39,14 +39,16 @@
   (setq use-package-always-ensure t
 		use-package-expand-minimally t))
 
-(defvar packages '(fzf
+(defconst packages '(fzf
 				   better-defaults
 				   projectile
+				   json-mode
 				   clojure-mode
 				   cider
 				   gruvbox-theme
 				   yaml-mode
 				   dockerfile-mode
+				   cmake-mode
 				   docker
 				   smex
 				   go-mode
@@ -91,13 +93,15 @@
 (setq go-indent-level 4)
 (add-hook 'raku-mode-hook #'lsp-deferred)
 (add-hook 'perl-mode-hook #'lsp-deferred)
+(add-hook 'c-or-c++-mode #'lsp-deferred)
+(add-hook 'c++-mode #'lsp-deferred)
+(add-hook 'c-mode #'lsp-deferred)
 
 (require 'company)
-(add-hook 'lsp-mode 'company-mode)
 (setq company-idle-delay 0.0)
 (setq company-minimum-prefix-length 1)
 (global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
-
+(add-hook 'after-init-hook 'global-company-mode)
 
 (require 'smex)
 (smex-initialize)
@@ -117,7 +121,7 @@
  '(custom-safe-themes
    '("fa49766f2acb82e0097e7512ae4a1d6f4af4d6f4655a48170d0a00bcb7183970" "19a2c0b92a6aa1580f1be2deb7b8a8e3a4857b6c6ccf522d00547878837267e7" "3e374bb5eb46eb59dbd92578cae54b16de138bc2e8a31a2451bf6fdb0f3fd81b" default))
  '(package-selected-packages
-   '(cider clojure-mode projectile better-defaults magit raku-mode go-mode smex docker dockerfile-mode yaml-mode gruvbox-theme use-package)))
+   '(json-mode cmake-mode cider clojure-mode projectile better-defaults magit raku-mode go-mode smex docker dockerfile-mode yaml-mode gruvbox-theme use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
