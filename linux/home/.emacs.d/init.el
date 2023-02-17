@@ -16,6 +16,7 @@
 (setq ring-bell-function 'ignore)
 (setq shell-file-name "/bin/bash")
 (setq shell-command-switch "-ic")
+(setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (global-linum-mode)
 
@@ -40,32 +41,37 @@
 		use-package-expand-minimally t))
 
 (defconst packages '(fzf
-				   better-defaults
-				   projectile
-				   json-mode
-				   clojure-mode
-				   cider
-				   gruvbox-theme
-				   yaml-mode
-				   dockerfile-mode
-				   cmake-mode
-				   docker
-				   smex
-				   go-mode
-				   raku-mode
-				   tuareg
-				   lsp-mode
-				   company
-				   treemacs
-				   lsp-treemacs
-				   ivy
-				   lsp-ivy
-				   magit))
+                     doom-modeline
+				     better-defaults
+				     projectile
+				     json-mode
+				     clojure-mode
+				     cider
+				     gruvbox-theme
+				     yaml-mode
+				     dockerfile-mode
+				     cmake-mode
+				     docker
+				     smex
+				     go-mode
+				     raku-mode
+				     tuareg
+				     lsp-mode
+				     company
+				     treemacs
+				     lsp-treemacs
+				     ivy
+				     lsp-ivy
+				     lsp-ui
+				     magit))
 (when (not package-archive-contents)
   (package-refresh-contents))
 (dolist (package packages)
   (unless (package-installed-p package)
 	(package-install package)))
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
 
 (require 'fzf)
 (global-set-key (kbd "C-x f") 'fzf)
