@@ -20,6 +20,10 @@
 (setq-default tab-width 4)
 (global-linum-mode)
 
+(add-hook 'emacs-lisp-mode-hook
+               (lambda ()
+                 (local-set-key (kbd "C-x E") 'eval-buffer)))
+
 (require 'ido)
 (ido-mode 1)
 
@@ -58,6 +62,7 @@
 				     tuareg
 				     lsp-mode
 				     company
+                     company-box
 				     treemacs
 				     lsp-treemacs
 				     ivy
@@ -69,6 +74,9 @@
 (dolist (package packages)
   (unless (package-installed-p package)
 	(package-install package)))
+
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
@@ -127,7 +135,7 @@
  '(custom-safe-themes
    '("fa49766f2acb82e0097e7512ae4a1d6f4af4d6f4655a48170d0a00bcb7183970" "19a2c0b92a6aa1580f1be2deb7b8a8e3a4857b6c6ccf522d00547878837267e7" "3e374bb5eb46eb59dbd92578cae54b16de138bc2e8a31a2451bf6fdb0f3fd81b" default))
  '(package-selected-packages
-   '(json-mode cmake-mode cider clojure-mode projectile better-defaults magit raku-mode go-mode smex docker dockerfile-mode yaml-mode gruvbox-theme use-package)))
+   '(company-box json-mode cmake-mode cider clojure-mode projectile better-defaults magit raku-mode go-mode smex docker dockerfile-mode yaml-mode gruvbox-theme use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
