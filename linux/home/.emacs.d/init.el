@@ -139,9 +139,8 @@
 (setq go-indent-level 4)
 (add-hook 'raku-mode-hook #'lsp-deferred)
 (add-hook 'perl-mode-hook #'lsp-deferred)
-(add-hook 'c-or-c++-mode #'lsp-deferred)
-(add-hook 'c++-mode #'lsp-deferred)
-(add-hook 'c-mode #'lsp-deferred)
+(add-hook 'c++-mode-hook #'lsp-deferred)
+(add-hook 'c-mode-hook #'lsp-deferred)
 
 (require 'company)
 (setq company-idle-delay 0.0)
