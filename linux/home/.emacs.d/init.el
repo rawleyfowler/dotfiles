@@ -3,8 +3,10 @@
 ;;; This is my Void Linux init.el
 ;;; Code:
 
+;; Font
 (add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-14"))
 
+;; Boilerplate/personalizations
 (defconst autosave-dir "~/.auto-save/")
 (unless (file-exists-p autosave-dir)
   (make-directory autosave-dir t))
@@ -15,30 +17,37 @@
 (setq ring-bell-function 'ignore)
 (setq shell-file-name "/bin/bash")
 (setq shell-command-switch "-ic")
+(setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (set-cursor-color "orange red")
 (global-linum-mode)
-
-(defun indent-buffer ()
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
-(global-set-key (kbd "C-c n") 'indent-buffer)
-
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-x E") 'eval-buffer)))
-
-(require 'ido)
-(ido-mode 1)
-
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
 (recentf-mode 1)
 
+;; My custom funcs
+(defun rf/indent-buffer ()
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+
+(defun rf/goto-dashboard ()
+  "Go back to dashboard buffer"
+  (interactive)
+  (switch-to-buffer "*dashboard*")
+  (dashboard-mode)
+  (dashboard-refresh-buffer))
+
+(defun rf/kill-inner-word ()
+  (interactive)
+  (forward-char 1)
+  (backward-word)
+  (kill-word 1))
+
+;; Packages
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -50,8 +59,7 @@
   (setq use-package-always-ensure t
 		use-package-expand-minimally t))
 
-(defconst packages '(fzf
-                     ctrlf
+(defconst packages '(ctrlf
                      doom-modeline
                      all-the-icons
 				     better-defaults
@@ -84,6 +92,7 @@
   (unless (package-installed-p package)
 	(package-install package)))
 
+;; Package configuration
 (when (display-graphic-p)
   (require 'all-the-icons))
 
@@ -93,7 +102,9 @@
 (ctrlf-mode +1)
 
 (require 'company-box)
-(add-hook 'company-mode-hook 'company-box-mode)
+
+(require 'ido)
+(ido-mode 1)
 
 (require 'dashboard)
 (dashboard-setup-startup-hook)
@@ -103,6 +114,7 @@
 (setq dashboard-banner-logo-title "emacs")
 (setq dashboard-set-heading-icons t)
 (setq dashboard-set-file-icons t)
+(setq dashboard-center-content t)
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
@@ -113,49 +125,45 @@
 (setq doom-modeline-time-icon nil)
 (setq doom-modeline-env-perl-executable "perl")
 
-(require 'fzf)
-(global-set-key (kbd "C-x f") 'fzf)
-(setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
-      fzf/executable "fzf"
-      fzf/git-grep-args "-i --line-number %s"
-      ;; command used for `fzf-grep-*` functions
-      ;; example usage for ripgrep:
-      ;; fzf/grep-command "rg --no-heading -nH"
-      fzf/grep-command "grep -nrH"
-      ;; If nil, the fzf buffer will appear at the top of the window
-      fzf/position-bottom t
-      fzf/window-height 15)
-
 (add-to-list 'auto-mode-alist '("\\.raku\\?\\(test\\|mod\\)$" . raku-mode))
 
 (require 'projectile)
 (projectile-mode)
 (setq projectile-completion-system 'ivy)
-(global-set-key (kbd "C-c p") 'projectile-command-map)
 
 (require 'lsp-mode)
 (setq lsp-keymap-prefix "C-c l")
 (setq raku-indent-level 4)
 (setq go-indent-level 4)
-(add-hook 'raku-mode-hook #'lsp-deferred)
-(add-hook 'perl-mode-hook #'lsp-deferred)
-(add-hook 'c++-mode-hook #'lsp-deferred)
-(add-hook 'c-mode-hook #'lsp-deferred)
 
 (require 'company)
 (setq company-idle-delay 0.0)
 (setq company-minimum-prefix-length 1)
-(global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
-(add-hook 'after-init-hook 'global-company-mode)
 
 (require 'smex)
 (smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
 
 (require 'docker)
-(global-set-key (kbd "C-c d") 'docker)
 
-(setq indent-tabs-mode nil)
+;; Hooks
+(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-x E") 'eval-buffer)))
+(add-hook 'raku-mode-hook #'lsp-deferred)
+(add-hook 'perl-mode-hook #'lsp-deferred)
+(add-hook 'c++-mode-hook #'lsp-deferred)
+(add-hook 'c-mode-hook #'lsp-deferred)
+(add-hook 'company-mode-hook 'company-box-mode)
+
+;; Keys
+(global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
+(global-set-key (kbd "C-c C-d") #'rf/goto-dashboard)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "C-c d") 'docker)
+(global-set-key (kbd "C-c p") 'projectile-command-map)
+(global-set-key (kbd "C-c n") #'rf/indent-buffer)
+(global-set-key (kbd "C-x w") #'rf/kill-inner-word)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
