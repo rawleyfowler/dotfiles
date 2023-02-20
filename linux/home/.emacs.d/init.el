@@ -10,7 +10,6 @@
   (make-directory autosave-dir t))
 (setq auto-save-file-name-transforms
       `(("\\(?:[^/]*/\\)*\\(.*\\)" ,(concat autosave-dir "\\1") t)))
-
 (setq package-enable-at-startup nil)
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
@@ -18,11 +17,18 @@
 (setq shell-command-switch "-ic")
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(set-cursor-color "orange red")
 (global-linum-mode)
 
+(defun indent-buffer ()
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+(global-set-key (kbd "C-c n") 'indent-buffer)
+
 (add-hook 'emacs-lisp-mode-hook
-               (lambda ()
-                 (local-set-key (kbd "C-x E") 'eval-buffer)))
+          (lambda ()
+            (local-set-key (kbd "C-x E") 'eval-buffer)))
 
 (require 'ido)
 (ido-mode 1)
@@ -45,11 +51,14 @@
 		use-package-expand-minimally t))
 
 (defconst packages '(fzf
+                     ctrlf
                      doom-modeline
+                     all-the-icons
 				     better-defaults
 				     projectile
 				     json-mode
 				     clojure-mode
+                     dashboard
 				     cider
 				     gruvbox-theme
 				     yaml-mode
@@ -75,11 +84,34 @@
   (unless (package-installed-p package)
 	(package-install package)))
 
+(when (display-graphic-p)
+  (require 'all-the-icons))
+
+(setq raku-indent-level 4)
+
+(require 'ctrlf)
+(ctrlf-mode +1)
+
 (require 'company-box)
 (add-hook 'company-mode-hook 'company-box-mode)
 
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq dashboard-items '((recents . 7)
+                        (bookmarks . 7)))
+(setq dashboard-startup-banner 'logo)
+(setq dashboard-banner-logo-title "emacs")
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+
 (require 'doom-modeline)
 (doom-modeline-mode 1)
+(setq doom-modeline-height 30)
+(setq doom-modeline-hud nil)
+(setq doom-modeline-icon t)
+(setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-time-icon nil)
+(setq doom-modeline-env-perl-executable "perl")
 
 (require 'fzf)
 (global-set-key (kbd "C-x f") 'fzf)
