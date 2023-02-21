@@ -1,62 +1,47 @@
 use v5.36;
 
-use File::Copy;
+use File::Path qw(make_path);
+use List::Util qw(first);
+use File::Copy::Recursive qw(rcopy);
 use Config;
 use Env;
 
 use experimental 'smartmatch';
 
-my @SUPPORTED_OS = [ 'freebsd', 'linux', 'openbsd' ];
-my $HOME = $ENV{HOME};
-my $DRY = (@ARGV ~~ '--dry');
+my $HOME = $ENV{'HOME'};
+my $dry = first { $_ eq '--dry' } @ARGV;
 
-sub install {
-	my ($os) = @_;
+my $dot = first { $_ ne '--dry' } @ARGV;
 
-	sub install_dir {
-		my ($dir_name, $step) = @_;
-
-		$step = '' unless $step;
-
-		opendir(my $dir, $dir_name);
-		my @files = readdir($dir);
-		closedir($dir);
-
-		foreach my $file (@files) {
-			chomp $file;
-
-			next if ($file eq '..') || ($file eq '.');
-
-			if (-d "$dir_name/$file") {
-				say "INSTALLING DIR $dir_name";
-				
-				if (length($step) > 0) {
-					mkdir "$HOME$step/$dir_name" unless $DRY;
-				} else {
-					mkdir "$HOME/$dir_name" unless $DRY;
-				}
-				
-				install_dir("$dir_name/$file", "$step/$file");
-			} elsif (-e "$dir_name/$file") {
-				if (length($step) > 0) {
-					say "INSTALLING $dir_name/$file TO $HOME$step/$file";
-					copy("dir_name/$file", "$HOME/$file") unless $DRY;
-				} else {
-					say "INSTALLING $dir_name/$file TO $HOME/$file";
-					copy("dir_name/$file", "$HOME/$file") unless $DRY;
-				}
-			}
-		}
-	}
-	
-	die 'Your operating system is not supported, to try anyways provide the OS type you would like to install as the first argument'
-		unless ($os ~~ @SUPPORTED_OS);
-
-	install_dir("./$os/home");
+sub copy_to_home($root) {
+    if ($dry) {
+        say "Copying $root to $HOME/";
+    } else {
+        rcopy("$root/*", "$HOME/");
+    }
 }
 
-if (scalar(@ARGV) && length($ARGV[0]) && ($ARGV[0] ne '--dry')) {
-	install($ARGV[0]);
-} else {
-	install($^O);
+sub copy_to_config($root) {
+    if ($dry) {
+        say "Making path $HOME/.config/";
+        say "Copying $root/* to $HOME/.config/$root";
+    } else {
+        make_path("$HOME/.config/");
+        rcopy("$root/*", "$HOME/.config/$root");
+    }
 }
+
+if ($dot eq 'i3') {
+    copy_to_config('i3');
+} elsif ($dot eq 'cwm' ||
+         $dot eq 'dwm') {
+    copy_to_home("$dot/xorg/*");
+} elsif ($dot eq 'bash') {
+    copy_to_home("bash/*");
+} elsif ($dot eq 'fish') {
+    copy_to_config('fish');
+} elsif ($dot eq 'git') {
+    copy_to_home('git/.gitignore_global');
+}
+
+
