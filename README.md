@@ -1,5 +1,5 @@
 # dotfiles
-These are my dotfiles. If your looking for my emacs configuration you can get it [here](https://githbu.com/rawleyfowler/e).
+These are my dotfiles. If your looking for my emacs configuration you can get it [here](https://github.com/rawleyfowler/e).
 
 ## Pre-install
 Make sure you have the program installed that you are trying to install dotfiles for.
