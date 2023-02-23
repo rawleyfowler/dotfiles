@@ -42,6 +42,6 @@ if ($dot eq 'i3') {
     copy_to_config('fish');
 } elsif ($dot eq 'git') {
     copy_to_home('git/.gitignore_global');
+} else {
+    copy_to_home("$dot/*");
 }
-
-
