@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 use v5.36;
 
 use File::Path qw(make_path);
