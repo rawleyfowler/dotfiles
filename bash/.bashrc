@@ -7,7 +7,7 @@
 
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
-eval "$($HOME/.rakubrew/bin/rakubrew init Bash)"
+[ -f "$HOME/.rakubrew/bin/rakubrew" ] && eval "$($HOME/.rakubrew/bin/rakubrew init Bash)"
 
 PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
